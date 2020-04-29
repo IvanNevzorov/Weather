@@ -9,20 +9,20 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private location: LocationService, private weathers: WeathersService) {}
+  constructor(private location: LocationService, private weathers: WeathersService) { }
 
   getLocation() {
-    this.location.getLovation().subscribe(data => console.log(data));
+    this.location.getLocation().subscribe(data => console.log(data));
   }
 
   getWeatherOne() {
     this.weathers.getWeatherStack()
-    .subscribe(data => console.log(data));
+      .subscribe(data => console.log(data));
   }
 
   getWeatherTwo() {
     this.weathers.getOpenWeatherMap()
-    .subscribe(data => console.log(data));
+      .subscribe(data => console.log(data));
   }
 
 }

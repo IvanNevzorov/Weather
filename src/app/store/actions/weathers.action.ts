@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { Location, Weather } from '../models/wheathers.model';
 
 export enum WeathersActionTypes {
   GetLocation = '[Location] Get Location',
@@ -19,7 +20,7 @@ export class GetLocation implements Action {
 export class AddLocation implements Action {
   readonly type = WeathersActionTypes.AddLocation;
 
-  constructor(public payload: {}){}
+  constructor(public payload: Location) { }
 }
 
 export class WeatherStackLoad implements Action {
@@ -29,7 +30,7 @@ export class WeatherStackLoad implements Action {
 export class WeatherStackLoadSuccess implements Action {
   readonly type = WeathersActionTypes.WeatherStackLoadSuccess;
 
-  constructor(public payload: {}){}
+  constructor(public payload: Weather) { }
 }
 
 export class WeatherStackLoadError implements Action {
@@ -43,7 +44,7 @@ export class OpenWeatherMapLoad implements Action {
 export class OpenWeatherMapLoadSuccess implements Action {
   readonly type = WeathersActionTypes.OpenWeatherMapLoadSuccess;
 
-  constructor(public payload: {}){}
+  constructor(public payload: Weather) { }
 }
 
 export class OpenWeatherMapLoadError implements Action {

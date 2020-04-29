@@ -14,15 +14,18 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 
 export class WeathersEffecrs {
   @Effect()
   getLocation$ = this.actions$.pipe(
     ofType(WeathersActionTypes.GetLocation),
     mergeMap(() =>
-      this.location.getLovation().pipe(
-        map(() => new AddLocation({}))
+      this.location.getLocation().pipe(
+        map((data) => {
+          new AddLocation(data);
+          this.storage.setLocation(data);
+        })
       )
     )
   );
@@ -31,8 +34,11 @@ export class WeathersEffecrs {
   WeatherStackLoad$ = this.actions$.pipe(
     ofType(WeathersActionTypes.WeatherStackLoad),
     mergeMap(() =>
-      this.location.getLovation().pipe(
-        map(() => new WeatherStackLoadSuccess({})),
+      this.weathrs.getOpenWeatherMap().pipe(
+        map((data) => {
+          new WeatherStackLoadSuccess(data);
+          this.storage.setWeatherStack(data)
+        }),
         catchError(() => of(new WeatherStackLoadError()))
       )
     )
@@ -42,8 +48,11 @@ export class WeathersEffecrs {
   OpenWeatherMapLoad$ = this.actions$.pipe(
     ofType(WeathersActionTypes.OpenWeatherMapLoad),
     mergeMap(() =>
-      this.location.getLovation().pipe(
-        map(() => new OpenWeatherMapLoadSuccess({})),
+      this.weathrs.getWeatherStack().pipe(
+        map((data) => {
+          new OpenWeatherMapLoadSuccess(data)
+          this.storage.setOpenWeatherMap(data)
+        }),
         catchError(() => of(new OpenWeatherMapLoadError()))
       )
     )
@@ -53,5 +62,5 @@ export class WeathersEffecrs {
     private actions$: Actions,
     private location: LocationService,
     private weathrs: WeathersService,
-    private storage: StorageService){}
+    private storage: StorageService) { }
 }
