@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Location } from '../store/models/wheathers.model';
+import { Location } from '../store/models/weathers.model';
 
 
 export enum LocationUrlType {

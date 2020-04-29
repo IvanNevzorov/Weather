@@ -1,7 +1,7 @@
-import { WeathersService } from './services/weathers.service';
-import { LocationService } from './services/location.service';
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Store, select } from '@ngrx/store';
+import { GetLocation, WeatherStackLoad, OpenWeatherMapLoad } from './store/actions/weathers.action';
+import { selectLocationState, selectRequestedWeatherState } from './store';
 
 @Component({
   selector: 'app-root',
@@ -9,20 +9,21 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private location: LocationService, private weathers: WeathersService) { }
+  constructor(private store: Store) { }
 
   getLocation() {
-    this.location.getLocation().subscribe(data => console.log(data));
+    this.store.dispatch(new GetLocation())
+    this.store.pipe(select(selectLocationState)).subscribe(data => console.log(data))
   }
 
   getWeatherOne() {
-    this.weathers.getWeatherStack()
-      .subscribe(data => console.log(data));
+    this.store.dispatch(new WeatherStackLoad())
+    this.store.pipe(select(selectRequestedWeatherState)).subscribe(data => console.log(data))
   }
 
   getWeatherTwo() {
-    this.weathers.getOpenWeatherMap()
-      .subscribe(data => console.log(data));
+    this.store.dispatch(new OpenWeatherMapLoad())
+    this.store.pipe(select(selectRequestedWeatherState)).subscribe(data => console.log(data))
   }
 
 }

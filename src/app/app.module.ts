@@ -6,6 +6,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { LocationInterceptor } from './services/location.interceptor';
+import { WeathersEffecrs } from './store/effects/weathrs.effects';
+import { reducers } from './store';
 
 @NgModule({
   declarations: [
@@ -14,8 +16,8 @@ import { LocationInterceptor } from './services/location.interceptor';
   imports: [
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([])
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([WeathersEffecrs])
   ],
   providers: [
     {

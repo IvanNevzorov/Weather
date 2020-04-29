@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { WeatherStack, OpenWeatherMap } from '../store/models/wheathers.model';
+import { WeatherStack, OpenWeatherMap } from '../store/models/weathers.model';
 
 export enum WeathersUrlType {
   weatherstack = 'http://api.weatherstack.com/current',

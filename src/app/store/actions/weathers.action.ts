@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Location, Weather } from '../models/wheathers.model';
+import { Location, Weather } from '../models/weathers.model';
 
 export enum WeathersActionTypes {
   GetLocation = '[Location] Get Location',
