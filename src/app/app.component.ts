@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { GetLocation, WeatherStackLoad, OpenWeatherMapLoad } from './store/actions/weathers.action';
-import { selectLocationState, selectRequestedWeatherState } from './store';
+import { selectLocationState, selectWeatherStackState, selectOpenWeatherMapState } from './store';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +11,7 @@ import { selectLocationState, selectRequestedWeatherState } from './store';
 export class AppComponent {
   constructor(private store: Store) { }
 
+
   getLocation() {
     this.store.dispatch(new GetLocation())
     this.store.pipe(select(selectLocationState)).subscribe(data => console.log(data))
@@ -18,12 +19,12 @@ export class AppComponent {
 
   getWeatherOne() {
     this.store.dispatch(new WeatherStackLoad())
-    this.store.pipe(select(selectRequestedWeatherState)).subscribe(data => console.log(data))
+    this.store.pipe(select(selectWeatherStackState)).subscribe(data => console.log(data))
   }
 
   getWeatherTwo() {
     this.store.dispatch(new OpenWeatherMapLoad())
-    this.store.pipe(select(selectRequestedWeatherState)).subscribe(data => console.log(data))
+    this.store.pipe(select(selectOpenWeatherMapState)).subscribe(data => console.log(data))
   }
 
 }

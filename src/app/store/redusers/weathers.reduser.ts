@@ -3,7 +3,8 @@ import { WeatherUnion, WeathersActionTypes } from './../actions/weathers.action'
 
 export interface State {
     location: Location;
-    weather: Weather;
+    weatherStack: Weather;
+    openWeatherMap: Weather;
     resource: string;
 }
 
@@ -12,7 +13,15 @@ const initialState: State = {
         city: '',
         country: ''
     },
-    weather: {
+    weatherStack: {
+        resourse: '',
+        temperature: 0,
+        feels_like: 0,
+        description: '',
+        wind_speed: 0,
+        humidity: 0
+    },
+    openWeatherMap: {
         resourse: '',
         temperature: 0,
         feels_like: 0,
@@ -27,22 +36,24 @@ export const reducer = (state: State = initialState, action: WeatherUnion) => {
 
     switch (action.type) {
         case WeathersActionTypes.GetLocation:
+            console.log('GetLocation')
             return state;
 
         case WeathersActionTypes.AddLocation:
+            console.log('AddLocation')
             return { ...state, location: action.payload };
 
         case WeathersActionTypes.WeatherStackLoad:
             return state;
 
         case WeathersActionTypes.WeatherStackLoadSuccess:
-            return { ...state, weather: action.payload, resource: "WeatherStack" };
+            return { ...state, weatherStack: action.payload, resource: "WeatherStack" };
 
         case WeathersActionTypes.OpenWeatherMapLoad:
             return state;
 
         case WeathersActionTypes.OpenWeatherMapLoadSuccess:
-            return { ...state, weather: action.payload, resource: "OpenWeatherMap" };
+            return { ...state, openWeatherMap: action.payload, resource: "OpenWeatherMap" };
 
         default:
             break;

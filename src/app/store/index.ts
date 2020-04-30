@@ -18,7 +18,12 @@ export const selectLocationState = createSelector(
     (weather: weather.State) => weather.location
 )
 
-export const selectRequestedWeatherState = createSelector(
+export const selectWeatherStackState = createSelector(
     selectWeatherState,
-    (weather: weather.State) => weather.weather
+    (weather: weather.State) => weather.weatherStack
+)
+
+export const selectOpenWeatherMapState = createSelector(
+    selectWeatherState,
+    (weather: weather.State) => weather.openWeatherMap
 )
