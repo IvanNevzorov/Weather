@@ -1,0 +1,10 @@
+<div class="select-weather">
+    <div class="select-weather__name-location">
+        <p>Location : {{ location.city }}</p>
+    </div>
+    <div class="select-weather__group-btn">
+        <button class="select-weather__group-btn_weatherStack btn" (click)='getWeatherStack()'>WeatherStack</button>
+        <button class="select-weather__group-btn_openWeatherMap btn"
+            (click)='getOpenWeatherMap()'>OpenWeatherMap</button>
+    </div>
+</div>

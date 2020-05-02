@@ -27,3 +27,8 @@ export const selectOpenWeatherMapState = createSelector(
     selectWeatherState,
     (weather: weather.State) => weather.openWeatherMap
 )
+
+export const selectResourceState = createSelector(
+    selectWeatherState,
+    (weather: weather.State) => weather.resource
+)

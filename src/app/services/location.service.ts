@@ -18,7 +18,6 @@ export class LocationService {
     return this.http.get(LocationUrlType.ipwhois).pipe(
       map((data: Location) => {
         const { city, country } = data;
-        this.storage.setLocation({ city, country })
         return { city, country }
       })
     )

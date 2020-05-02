@@ -1,3 +1,10 @@
-<button (click)= "getLocation()"> Получить IP</button>
-<button (click) = "getWeatherOne()">Получить погоду 1</button>
-<button (click) = "getWeatherTwo()">Получить погоду 2</button>
+<div class="container">
+    <app-select-weather [location]='locationInformation'></app-select-weather>
+    <div class="weather-view" [ngSwitch]="wetherChoise">
+        <app-weatherstack *ngSwitchCase='"WeatherStack"' [weather]='weatherStackInformation'>
+        </app-weatherstack>
+        <app-openweathermap *ngSwitchCase='"OpenWeatherMap"' [weather]='openWeatherMapInformation'>
+        </app-openweathermap>
+        <div class="default" *ngSwitchDefault></div>
+    </div>
+</div>

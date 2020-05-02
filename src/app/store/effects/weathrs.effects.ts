@@ -6,6 +6,8 @@ import {
   WeatherStackLoadError,
   OpenWeatherMapLoadSuccess,
   OpenWeatherMapLoadError,
+  WeatherStackLoad,
+  OpenWeatherMapLoad,
 } from './../actions/weathers.action';
 import { WeathersService } from './../../services/weathers.service';
 import { LocationService } from './../../services/location.service';
@@ -23,53 +25,55 @@ export class WeathersEffecrs {
   public getLocation$ = this.actions$.pipe(
     ofType(WeathersActionTypes.GetLocation),
     mergeMap(() =>
-      iif(() => !!this.storage.getloction(), this.trueLocation, this.falsLocation)
+      this.location.getLocation().pipe(
+        map((data: Location) => new AddLocation(data))
+      )
     )
   )
 
   @Effect()
   public WeatherStackLoad$ = this.actions$.pipe(
     ofType(WeathersActionTypes.WeatherStackLoad),
-    mergeMap(() =>
-      iif(() => !!this.storage.getWeatherStack(), this.trueWeatherStack, this.falseWeatherStack)
+    mergeMap((action: WeatherStackLoad) =>
+      iif(() => this.storage.checkSaveTimeWeatherStack(), this.storageWeatherStack(), this.serviceWeatherStack(action.payload))
     )
   )
 
   @Effect()
   public OpenWeatherMapLoad$ = this.actions$.pipe(
     ofType(WeathersActionTypes.OpenWeatherMapLoad),
-    mergeMap(() =>
-      iif(() => !!this.storage.getOpenWeatherMap(), this.trueOpenWeatherMap, this.falseOpenWeatherMap)
+    mergeMap((action: OpenWeatherMapLoad) =>
+      iif(() => this.storage.checkSaveTimeOpenWeatherMap(), this.storageOpenWeatherMap(), this.serviceOpenWeatherMap(action.payload))
     )
   )
 
-  private trueLocation = of(this.storage.getloction()).pipe(
-    map((data: Location) => new AddLocation(data))
-  );
+  private storageWeatherStack() {
+    return of(this.storage.getWeatherStack()).pipe(
+      map((data: Weather) => new WeatherStackLoadSuccess(data)),
+      catchError(() => of(new WeatherStackLoadError()))
+    )
+  }
 
-  private falsLocation = this.location.getLocation().pipe(
-    map((data: Location) => new AddLocation(data))
-  );
+  private serviceWeatherStack(city: string) {
+    return this.weathers.getWeatherStack(city).pipe(
+      map((data: Weather) => new WeatherStackLoadSuccess(data)),
+      catchError(() => of(new WeatherStackLoadError()))
+    )
+  }
 
-  private trueWeatherStack = of(this.storage.getWeatherStack()).pipe(
-    map((data: Weather) => new WeatherStackLoadSuccess(data)),
-    catchError(() => of(new WeatherStackLoadError()))
-  );
+  private storageOpenWeatherMap() {
+    return of(this.storage.getOpenWeatherMap()).pipe(
+      map((data: Weather) => new OpenWeatherMapLoadSuccess(data)),
+      catchError(() => of(new OpenWeatherMapLoadError()))
+    )
+  }
 
-  private falseWeatherStack = this.weathers.getWeatherStack().pipe(
-    map((data: Weather) => new WeatherStackLoadSuccess(data)),
-    catchError(() => of(new WeatherStackLoadError()))
-  );
-
-  private trueOpenWeatherMap = of(this.storage.getOpenWeatherMap()).pipe(
-    map((data: Weather) => new OpenWeatherMapLoadSuccess(data)),
-    catchError(() => of(new OpenWeatherMapLoadError()))
-  );
-
-  private falseOpenWeatherMap = this.weathers.getOpenWeatherMap().pipe(
-    map((data: Weather) => new OpenWeatherMapLoadSuccess(data)),
-    catchError(() => of(new OpenWeatherMapLoadError()))
-  );
+  private serviceOpenWeatherMap(city: string) {
+    return this.weathers.getOpenWeatherMap(city).pipe(
+      map((data: Weather) => new OpenWeatherMapLoadSuccess(data)),
+      catchError(() => of(new OpenWeatherMapLoadError()))
+    )
+  }
 
   constructor(
     private actions$: Actions,

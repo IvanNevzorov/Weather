@@ -25,6 +25,8 @@ export class AddLocation implements Action {
 
 export class WeatherStackLoad implements Action {
   readonly type = WeathersActionTypes.WeatherStackLoad;
+
+  constructor(public payload: string) { }
 }
 
 export class WeatherStackLoadSuccess implements Action {
@@ -39,6 +41,8 @@ export class WeatherStackLoadError implements Action {
 
 export class OpenWeatherMapLoad implements Action {
   readonly type = WeathersActionTypes.OpenWeatherMapLoad;
+
+  constructor(public payload: string) { }
 }
 
 export class OpenWeatherMapLoadSuccess implements Action {

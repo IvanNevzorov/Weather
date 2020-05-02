@@ -1,0 +1,32 @@
+.select-weather{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__name-location{
+        color: red;
+        font-size: 30px;
+    }
+
+    &__group-btn{
+        display: flex;
+        justify-content: center;
+
+        &_weatherStack{
+            background-color: rgba(90, 90, 209, 0.877);
+            color:white;
+        }
+
+        &_openWeatherMap {
+            background-color: rgba(209, 154, 90, 0.877);
+            color:white;
+        }
+    }
+}
+
+.btn{
+    width: 150px;
+    height: 30px;
+    border-radius: 3px;
+    margin: 5px;
+}
