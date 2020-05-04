@@ -8,6 +8,7 @@ import {
   OpenWeatherMapLoadError,
   WeatherStackLoad,
   OpenWeatherMapLoad,
+  GetLocation,
 } from './../actions/weathers.action';
 import { WeathersService } from './../../services/weathers.service';
 import { LocationService } from './../../services/location.service';
@@ -15,17 +16,27 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { of, iif } from 'rxjs';
-import { Location, Weather } from '../models/weathers.model';
+import { Weather, Location } from '../models/weathers.model';
 
 @Injectable({ providedIn: 'root' })
 
 export class WeathersEffecrs {
 
   @Effect()
+  public initLocation$ = this.actions$.pipe(
+    ofType(WeathersActionTypes.InitLocation),
+    mergeMap(() =>
+      this.location.initLocation().pipe(
+        map((data: Location) => new AddLocation(data))
+      )
+    )
+  )
+
+  @Effect()
   public getLocation$ = this.actions$.pipe(
     ofType(WeathersActionTypes.GetLocation),
-    mergeMap(() =>
-      this.location.getLocation().pipe(
+    mergeMap((action: GetLocation) =>
+      this.location.getGeoLocation(action.payload).pipe(
         map((data: Location) => new AddLocation(data))
       )
     )
@@ -35,7 +46,7 @@ export class WeathersEffecrs {
   public WeatherStackLoad$ = this.actions$.pipe(
     ofType(WeathersActionTypes.WeatherStackLoad),
     mergeMap((action: WeatherStackLoad) =>
-      iif(() => this.storage.checkSaveTimeWeatherStack(), this.storageWeatherStack(), this.serviceWeatherStack(action.payload))
+      iif(() => this.storage.checkSaveTimeWeatherStack(action.payload), this.storageWeatherStack(action.payload.name), this.serviceWeatherStack(action.payload))
     )
   )
 
@@ -43,33 +54,33 @@ export class WeathersEffecrs {
   public OpenWeatherMapLoad$ = this.actions$.pipe(
     ofType(WeathersActionTypes.OpenWeatherMapLoad),
     mergeMap((action: OpenWeatherMapLoad) =>
-      iif(() => this.storage.checkSaveTimeOpenWeatherMap(), this.storageOpenWeatherMap(), this.serviceOpenWeatherMap(action.payload))
+      iif(() => this.storage.checkSaveTimeOpenWeatherMap(action.payload), this.storageOpenWeatherMap(action.payload.name), this.serviceOpenWeatherMap(action.payload))
     )
   )
 
-  private storageWeatherStack() {
-    return of(this.storage.getWeatherStack()).pipe(
+  private storageWeatherStack(city: string) {
+    return of(this.storage.getWeatherStack(city)).pipe(
       map((data: Weather) => new WeatherStackLoadSuccess(data)),
       catchError(() => of(new WeatherStackLoadError()))
     )
   }
 
-  private serviceWeatherStack(city: string) {
-    return this.weathers.getWeatherStack(city).pipe(
+  private serviceWeatherStack(location: Location) {
+    return this.weathers.getWeatherStack(location).pipe(
       map((data: Weather) => new WeatherStackLoadSuccess(data)),
       catchError(() => of(new WeatherStackLoadError()))
     )
   }
 
-  private storageOpenWeatherMap() {
-    return of(this.storage.getOpenWeatherMap()).pipe(
+  private storageOpenWeatherMap(city: string) {
+    return of(this.storage.getOpenWeatherMap(city)).pipe(
       map((data: Weather) => new OpenWeatherMapLoadSuccess(data)),
       catchError(() => of(new OpenWeatherMapLoadError()))
     )
   }
 
-  private serviceOpenWeatherMap(city: string) {
-    return this.weathers.getOpenWeatherMap(city).pipe(
+  private serviceOpenWeatherMap(location: Location) {
+    return this.weathers.getOpenWeatherMap(location).pipe(
       map((data: Weather) => new OpenWeatherMapLoadSuccess(data)),
       catchError(() => of(new OpenWeatherMapLoadError()))
     )

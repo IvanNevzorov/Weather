@@ -1,4 +1,4 @@
-import { Location, Weather } from '../models/weathers.model';
+import { Weather, Location } from '../models/weathers.model';
 import { WeatherUnion, WeathersActionTypes } from './../actions/weathers.action';
 
 export interface State {
@@ -10,8 +10,12 @@ export interface State {
 
 const initialState: State = {
     location: {
-        city: '',
-        country: ''
+        country: '',
+        name: '',
+        point: {
+            lng: 0,
+            lat: 0,
+        }
     },
     weatherStack: {
         resourse: '',
@@ -36,11 +40,9 @@ export const reducer = (state: State = initialState, action: WeatherUnion) => {
 
     switch (action.type) {
         case WeathersActionTypes.GetLocation:
-            console.log('GetLocation')
             return state;
 
         case WeathersActionTypes.AddLocation:
-            console.log('AddLocation')
             return { ...state, location: action.payload };
 
         case WeathersActionTypes.WeatherStackLoad:

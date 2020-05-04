@@ -1,7 +1,8 @@
 import { Action } from '@ngrx/store';
-import { Location, Weather } from '../models/weathers.model';
+import { Weather, Location } from '../models/weathers.model';
 
 export enum WeathersActionTypes {
+  InitLocation = '[Location] Init Location',
   GetLocation = '[Location] Get Location',
   AddLocation = '[Location] Add Location',
 
@@ -13,8 +14,14 @@ export enum WeathersActionTypes {
   OpenWeatherMapLoadError = '[Weather] Load Error OpenWeatherMap'
 }
 
+export class InitLocation implements Action {
+  readonly type = WeathersActionTypes.GetLocation;
+}
+
 export class GetLocation implements Action {
   readonly type = WeathersActionTypes.GetLocation;
+
+  constructor(public payload: string) { }
 }
 
 export class AddLocation implements Action {
@@ -26,7 +33,7 @@ export class AddLocation implements Action {
 export class WeatherStackLoad implements Action {
   readonly type = WeathersActionTypes.WeatherStackLoad;
 
-  constructor(public payload: string) { }
+  constructor(public payload: Location) { }
 }
 
 export class WeatherStackLoadSuccess implements Action {
@@ -42,7 +49,7 @@ export class WeatherStackLoadError implements Action {
 export class OpenWeatherMapLoad implements Action {
   readonly type = WeathersActionTypes.OpenWeatherMapLoad;
 
-  constructor(public payload: string) { }
+  constructor(public payload: Location) { }
 }
 
 export class OpenWeatherMapLoadSuccess implements Action {
@@ -56,6 +63,7 @@ export class OpenWeatherMapLoadError implements Action {
 }
 
 export type WeatherUnion =
+  | InitLocation
   | GetLocation
   | AddLocation
   | WeatherStackLoad

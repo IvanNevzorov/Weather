@@ -1,18 +1,22 @@
-export interface Location {
+export interface LocationAPI {
     city: string;
-    country: string
 }
 
-export interface Weather {
-    resourse: string;
-    temperature: number;
-    feels_like: number;
-    description: string;
-    wind_speed: number;
-    humidity: number;
+export interface GeoLocationAPI {
+    hits: Location[];
 }
 
-export interface WeatherStack {
+export interface Location {
+    country: string;
+    name: string;
+    point: {
+        lng: number;
+        lat: number;
+    }
+}
+
+
+export interface WeatherStackAPI {
     current: {
         temperature: number;
         feelslike: number;
@@ -23,7 +27,7 @@ export interface WeatherStack {
 
 }
 
-export interface OpenWeatherMap {
+export interface OpenWeatherMapAPI {
     main: {
         temp: number;
         feels_like: number;
@@ -35,4 +39,13 @@ export interface OpenWeatherMap {
     weather: [{
         description: string;
     }];
+}
+
+export interface Weather {
+    resourse: string;
+    temperature: number;
+    feels_like: number;
+    description: string;
+    wind_speed: number;
+    humidity: number;
 }
