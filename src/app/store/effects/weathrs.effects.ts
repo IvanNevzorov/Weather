@@ -1,14 +1,14 @@
 import { StorageService } from './../../services/storage.service';
 import {
   WeathersActionTypes,
-  AddLocation,
-  WeatherStackLoadSuccess,
-  WeatherStackLoadError,
-  OpenWeatherMapLoadSuccess,
-  OpenWeatherMapLoadError,
-  WeatherStackLoad,
-  OpenWeatherMapLoad,
-  GetLocation,
+  AddLocationAction,
+  WeatherStackLoadSuccessAction,
+  WeatherStackLoadErrorAction,
+  OpenWeatherMapLoadSuccessAction,
+  OpenWeatherMapLoadErrorAction,
+  WeatherStackLoadAction,
+  OpenWeatherMapLoadAction,
+  GetLocationAction,
 } from './../actions/weathers.action';
 import { WeathersService } from './../../services/weathers.service';
 import { LocationService } from './../../services/location.service';
@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { of, iif } from 'rxjs';
-import { Weather, Location } from '../models/weathers.model';
+import { Weather, Location } from '../interfeces/weathers.interfaces';
 
 @Injectable({ providedIn: 'root' })
 
@@ -26,8 +26,8 @@ export class WeathersEffecrs {
   public initLocation$ = this.actions$.pipe(
     ofType(WeathersActionTypes.InitLocation),
     mergeMap(() =>
-      this.location.initLocation().pipe(
-        map((data: Location) => new AddLocation(data))
+      this.locationService.initLocation().pipe(
+        map((data: Location) => new AddLocationAction(data))
       )
     )
   )
@@ -35,9 +35,9 @@ export class WeathersEffecrs {
   @Effect()
   public getLocation$ = this.actions$.pipe(
     ofType(WeathersActionTypes.GetLocation),
-    mergeMap((action: GetLocation) =>
-      this.location.getGeoLocation(action.payload).pipe(
-        map((data: Location) => new AddLocation(data))
+    mergeMap((action: GetLocationAction) =>
+      this.locationService.getGeoLocation(action.payload).pipe(
+        map((data: Location) => new AddLocationAction(data))
       )
     )
   )
@@ -45,52 +45,52 @@ export class WeathersEffecrs {
   @Effect()
   public WeatherStackLoad$ = this.actions$.pipe(
     ofType(WeathersActionTypes.WeatherStackLoad),
-    mergeMap((action: WeatherStackLoad) =>
-      iif(() => this.storage.checkSaveTimeWeatherStack(action.payload), this.storageWeatherStack(action.payload.name), this.serviceWeatherStack(action.payload))
+    mergeMap((action: WeatherStackLoadAction) =>
+      iif(() => this.storageService.checkSaveTimeWeatherStack(action.payload), this.storageWeatherStack(action.payload.name), this.serviceWeatherStack(action.payload))
     )
   )
 
   @Effect()
   public OpenWeatherMapLoad$ = this.actions$.pipe(
     ofType(WeathersActionTypes.OpenWeatherMapLoad),
-    mergeMap((action: OpenWeatherMapLoad) =>
-      iif(() => this.storage.checkSaveTimeOpenWeatherMap(action.payload), this.storageOpenWeatherMap(action.payload.name), this.serviceOpenWeatherMap(action.payload))
+    mergeMap((action: OpenWeatherMapLoadAction) =>
+      iif(() => this.storageService.checkSaveTimeOpenWeatherMap(action.payload), this.storageOpenWeatherMap(action.payload.name), this.serviceOpenWeatherMap(action.payload))
     )
   )
 
   private storageWeatherStack(city: string) {
-    return of(this.storage.getWeatherStack(city)).pipe(
-      map((data: Weather) => new WeatherStackLoadSuccess(data)),
-      catchError(() => of(new WeatherStackLoadError()))
+    return of(this.storageService.getWeatherStack(city)).pipe(
+      map((data: Weather) => new WeatherStackLoadSuccessAction(data)),
+      catchError(() => of(new WeatherStackLoadErrorAction()))
     )
   }
 
   private serviceWeatherStack(location: Location) {
-    return this.weathers.getWeatherStack(location).pipe(
-      map((data: Weather) => new WeatherStackLoadSuccess(data)),
-      catchError(() => of(new WeatherStackLoadError()))
+    return this.weathersService.getWeatherStack(location).pipe(
+      map((data: Weather) => new WeatherStackLoadSuccessAction(data)),
+      catchError(() => of(new WeatherStackLoadErrorAction()))
     )
   }
 
   private storageOpenWeatherMap(city: string) {
-    return of(this.storage.getOpenWeatherMap(city)).pipe(
-      map((data: Weather) => new OpenWeatherMapLoadSuccess(data)),
-      catchError(() => of(new OpenWeatherMapLoadError()))
+    return of(this.storageService.getOpenWeatherMap(city)).pipe(
+      map((data: Weather) => new OpenWeatherMapLoadSuccessAction(data)),
+      catchError(() => of(new OpenWeatherMapLoadErrorAction()))
     )
   }
 
   private serviceOpenWeatherMap(location: Location) {
-    return this.weathers.getOpenWeatherMap(location).pipe(
-      map((data: Weather) => new OpenWeatherMapLoadSuccess(data)),
-      catchError(() => of(new OpenWeatherMapLoadError()))
+    return this.weathersService.getOpenWeatherMap(location).pipe(
+      map((data: Weather) => new OpenWeatherMapLoadSuccessAction(data)),
+      catchError(() => of(new OpenWeatherMapLoadErrorAction()))
     )
   }
 
   constructor(
     private actions$: Actions,
-    private location: LocationService,
-    private weathers: WeathersService,
-    private storage: StorageService
+    private locationService: LocationService,
+    private weathersService: WeathersService,
+    private storageService: StorageService
   ) { }
 
 }

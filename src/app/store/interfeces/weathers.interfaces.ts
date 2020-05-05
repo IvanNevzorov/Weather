@@ -15,7 +15,6 @@ export interface Location {
     }
 }
 
-
 export interface WeatherStackAPI {
     current: {
         temperature: number;
@@ -24,7 +23,6 @@ export interface WeatherStackAPI {
         wind_speed: number;
         humidity: number;
     }
-
 }
 
 export interface OpenWeatherMapAPI {

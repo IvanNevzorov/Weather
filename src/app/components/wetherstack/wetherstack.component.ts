@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Weather } from 'src/app/store/models/weathers.model';
+import { Weather } from 'src/app/store/interfeces/weathers.interfaces';
 
 @Component({
     selector: 'app-weatherstack',

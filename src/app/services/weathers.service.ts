@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { WeatherStackAPI, OpenWeatherMapAPI, Location } from '../store/models/weathers.model';
+import { WeatherStackAPI, OpenWeatherMapAPI, Location } from '../store/interfeces/weathers.interfaces';
 import { StorageService } from './storage.service';
 import * as moment from 'moment/moment';
 

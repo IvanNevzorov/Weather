@@ -1,5 +1,5 @@
-import { Weather, Location } from '../models/weathers.model';
-import { WeatherUnion, WeathersActionTypes } from './../actions/weathers.action';
+import { Weather, Location } from '../interfeces/weathers.interfaces';
+import { WeatherUnionAction, WeathersActionTypes } from './../actions/weathers.action';
 
 export interface State {
     location: Location;
@@ -36,7 +36,7 @@ const initialState: State = {
     resource: ''
 }
 
-export const reducer = (state: State = initialState, action: WeatherUnion) => {
+export const reducer = (state: State = initialState, action: WeatherUnionAction) => {
 
     switch (action.type) {
         case WeathersActionTypes.GetLocation:

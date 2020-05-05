@@ -1,9 +1,6 @@
 import * as weather from './redusers/weathers.reduser'
 import { ActionReducerMap } from '@ngrx/store'
 import { createSelector } from '@ngrx/store';
-import { Weather } from './models/weathers.model';
-import { Observable } from 'rxjs';
-
 
 export interface State {
     weather: weather.State

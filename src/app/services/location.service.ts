@@ -1,14 +1,13 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { LocationAPI, GeoLocationAPI } from '../store/models/weathers.model';
+import { map, mergeMap } from 'rxjs/operators';
+import { LocationAPI, GeoLocationAPI, Location } from '../store/interfeces/weathers.interfaces';
 import { StorageService } from './storage.service';
-import { of } from 'rxjs';
 
 
 export enum LocationUrlType {
   ipwhois = 'http://free.ipwhois.io/json/',
-  datadata = 'https://graphhopper.com/api/1/geocode'
+  geocode = 'https://graphhopper.com/api/1/geocode'
 }
 
 @Injectable({ providedIn: 'root' })
@@ -16,26 +15,29 @@ export enum LocationUrlType {
 export class LocationService {
   constructor(private http: HttpClient, private storage: StorageService) { }
 
-  async initLocation() {
-    let initLocation;
-    await this.getLocation().subscribe(data => initLocation = data)
-
-    return this.getGeoLocation(initLocation);
+  public initLocation() {
+    return this.getLocation().pipe(
+      mergeMap((data) =>
+        this.getGeoLocation(data).pipe(
+          map((result) => result)
+        )
+      )
+    )
   }
 
-  getLocation() {
+  public getLocation() {
     return this.http.get(LocationUrlType.ipwhois).pipe(
       map((data: LocationAPI) => {
         console.log(data);
         const { city } = data;
-        return city
+        return city;
       })
     )
   }
 
   getGeoLocation(city) {
     console.log(city);
-    return this.http.get(LocationUrlType.datadata, {
+    return this.http.get(LocationUrlType.geocode, {
       params: new HttpParams()
         .set('q', city)
         .set('locale', 'en')
@@ -49,5 +51,4 @@ export class LocationService {
       })
     )
   }
-
 }

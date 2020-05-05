@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Weather, Location } from '../models/weathers.model';
+import { Weather, Location } from '../interfeces/weathers.interfaces';
 
 export enum WeathersActionTypes {
   InitLocation = '[Location] Init Location',
@@ -14,62 +14,62 @@ export enum WeathersActionTypes {
   OpenWeatherMapLoadError = '[Weather] Load Error OpenWeatherMap'
 }
 
-export class InitLocation implements Action {
-  readonly type = WeathersActionTypes.GetLocation;
+export class InitLocationAction implements Action {
+  readonly type = WeathersActionTypes.InitLocation;
 }
 
-export class GetLocation implements Action {
+export class GetLocationAction implements Action {
   readonly type = WeathersActionTypes.GetLocation;
 
   constructor(public payload: string) { }
 }
 
-export class AddLocation implements Action {
+export class AddLocationAction implements Action {
   readonly type = WeathersActionTypes.AddLocation;
 
   constructor(public payload: Location) { }
 }
 
-export class WeatherStackLoad implements Action {
+export class WeatherStackLoadAction implements Action {
   readonly type = WeathersActionTypes.WeatherStackLoad;
 
   constructor(public payload: Location) { }
 }
 
-export class WeatherStackLoadSuccess implements Action {
+export class WeatherStackLoadSuccessAction implements Action {
   readonly type = WeathersActionTypes.WeatherStackLoadSuccess;
 
   constructor(public payload: Weather) { }
 }
 
-export class WeatherStackLoadError implements Action {
+export class WeatherStackLoadErrorAction implements Action {
   readonly type = WeathersActionTypes.WeatherStackLoadError;
 }
 
-export class OpenWeatherMapLoad implements Action {
+export class OpenWeatherMapLoadAction implements Action {
   readonly type = WeathersActionTypes.OpenWeatherMapLoad;
 
   constructor(public payload: Location) { }
 }
 
-export class OpenWeatherMapLoadSuccess implements Action {
+export class OpenWeatherMapLoadSuccessAction implements Action {
   readonly type = WeathersActionTypes.OpenWeatherMapLoadSuccess;
 
   constructor(public payload: Weather) { }
 }
 
-export class OpenWeatherMapLoadError implements Action {
+export class OpenWeatherMapLoadErrorAction implements Action {
   readonly type = WeathersActionTypes.OpenWeatherMapLoadError;
 }
 
-export type WeatherUnion =
-  | InitLocation
-  | GetLocation
-  | AddLocation
-  | WeatherStackLoad
-  | WeatherStackLoadSuccess
-  | WeatherStackLoadError
-  | OpenWeatherMapLoad
-  | OpenWeatherMapLoadSuccess
-  | OpenWeatherMapLoadError;
+export type WeatherUnionAction =
+  | InitLocationAction
+  | GetLocationAction
+  | AddLocationAction
+  | WeatherStackLoadAction
+  | WeatherStackLoadSuccessAction
+  | WeatherStackLoadErrorAction
+  | OpenWeatherMapLoadAction
+  | OpenWeatherMapLoadSuccessAction
+  | OpenWeatherMapLoadErrorAction;
 

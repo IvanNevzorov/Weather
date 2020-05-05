@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { WeatherStackLoad, OpenWeatherMapLoad, GetLocation, InitLocation } from './store/actions/weathers.action';
+import { WeatherStackLoadAction, OpenWeatherMapLoadAction, InitLocationAction } from './store/actions/weathers.action';
 import { selectWeatherStackState, selectOpenWeatherMapState, selectResourceState, selectLocationState } from './store';
-import { Weather, Location } from './store/models/weathers.model';
+import { Weather, Location } from './store/interfeces/weathers.interfaces';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,23 +15,23 @@ export class AppComponent implements OnInit {
   public weatherStackInfo: Weather;
   public openWeatherMapInfo: Weather;
   public wetherChoise: string;
-
+  public weatherStackState$: Observable<Weather> = this.store.pipe(select(selectWeatherStackState));
   constructor(private store: Store) { }
 
   ngOnInit() {
-    this.store.dispatch(new InitLocation());
+    this.store.dispatch(new InitLocationAction());
     this.store.pipe(select(selectLocationState)).subscribe(data => this.locationInfo = data);
   }
 
   templateWeater(resource) {
-    if (resource === "weatherStack") {
-      this.store.dispatch(new WeatherStackLoad(this.locationInfo));
-      this.store.pipe(select(selectWeatherStackState)).subscribe(data => this.weatherStackInfo = data);
+    if (resource === 'weatherStack') {
+      this.store.dispatch(new WeatherStackLoadAction(this.locationInfo));
+      this.weatherStackState$.subscribe(data => this.weatherStackInfo = data);
       this.store.pipe(select(selectResourceState)).subscribe(data => this.wetherChoise = data);
     }
 
-    if (resource === "openWeatherMap") {
-      this.store.dispatch(new OpenWeatherMapLoad(this.locationInfo));
+    if (resource === 'openWeatherMap') {
+      this.store.dispatch(new OpenWeatherMapLoadAction(this.locationInfo));
       this.store.pipe(select(selectOpenWeatherMapState)).subscribe(data => this.openWeatherMapInfo = data);
     }
 
