@@ -34,7 +34,7 @@ const initialState: State = {
         humidity: 0
     },
     resource: ''
-}
+};
 
 export const reducer = (state: State = initialState, action: WeatherUnionAction) => {
 
@@ -49,15 +49,15 @@ export const reducer = (state: State = initialState, action: WeatherUnionAction)
             return state;
 
         case WeathersActionTypes.WeatherStackLoadSuccess:
-            return { ...state, weatherStack: action.payload, resource: "WeatherStack" };
+            return { ...state, weatherStack: action.payload, resource: 'WeatherStack' };
 
         case WeathersActionTypes.OpenWeatherMapLoad:
             return state;
 
         case WeathersActionTypes.OpenWeatherMapLoadSuccess:
-            return { ...state, openWeatherMap: action.payload, resource: "OpenWeatherMap" };
+            return { ...state, openWeatherMap: action.payload, resource: 'OpenWeatherMap' };
 
         default:
             break;
     }
-}
+};

@@ -1,9 +1,10 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { WeatherStackAPI, OpenWeatherMapAPI, Location } from '../store/interfeces/weathers.interfaces';
+import { WeatherStackAPI, OpenWeatherMapAPI, Location, Weather } from '../store/interfeces/weathers.interfaces';
 import { StorageService } from './storage.service';
 import * as moment from 'moment/moment';
+import { Observable } from 'rxjs';
 
 export enum WeathersUrlType {
   weatherstack = 'http://api.weatherstack.com/current',
@@ -15,8 +16,8 @@ export enum WeathersUrlType {
 export class WeathersService {
   constructor(private http: HttpClient, private storage: StorageService) { }
 
-  getWeatherStack({ name, point }: Location) {
-    const queryCoordinates = `${point.lng.toFixed(4)}, ${point.lat.toFixed(4)}`
+  public getWeatherStack({ point }: Location): Observable<Weather> {
+    const queryCoordinates = `${point.lng.toFixed(4)}, ${point.lat.toFixed(4)}`;
     return this.http.get(WeathersUrlType.weatherstack, {
       params: new HttpParams()
         .set(`access_key`, 'f8a2ca6d0dfb37f60b8f7eaa9aae45e3')
@@ -24,7 +25,6 @@ export class WeathersService {
     }).pipe(
       map((data: WeatherStackAPI) => {
         const { temperature, feelslike, weather_descriptions, wind_speed, humidity } = data.current;
-        const saveTime = moment().toISOString();
         const result = {
           resourse: 'WeatherStack',
           temperature,
@@ -33,15 +33,13 @@ export class WeathersService {
           wind_speed,
           humidity
         };
-        this.storage.setWeatherStack(result, name);
-        this.storage.setSaveTimeWeatherStack(saveTime, name);
         return result;
       })
     );
   }
 
-  getOpenWeatherMap({ name, point }: Location) {
-    const queryCoordinates = `${point.lng.toFixed(4)}, ${point.lat.toFixed(4)}`
+  public getOpenWeatherMap({ point }: Location): Observable<Weather> {
+    const queryCoordinates = `${point.lng.toFixed(4)}, ${point.lat.toFixed(4)}`;
     return this.http.get(WeathersUrlType.openweathermap, {
       params: new HttpParams()
         .set(`q`, queryCoordinates)
@@ -49,7 +47,6 @@ export class WeathersService {
     }).pipe(
       map((data: OpenWeatherMapAPI) => {
         const { main: { temp, feels_like, humidity }, wind: { speed }, weather: [{ description }] } = data;
-        const saveTime = moment().toISOString();
         const result = {
           resourse: 'OpenWeatherMap',
           temperature: Math.ceil(temp - 273),
@@ -58,8 +55,6 @@ export class WeathersService {
           wind_speed: speed,
           humidity
         };
-        this.storage.setOpenWeatherMap(result, name);
-        this.storage.setSaveTimeOpenWeatherMap(saveTime, name);
         return result;
       })
     );

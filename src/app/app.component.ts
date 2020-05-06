@@ -4,6 +4,7 @@ import { WeatherStackLoadAction, OpenWeatherMapLoadAction, InitLocationAction } 
 import { selectWeatherStackState, selectOpenWeatherMapState, selectResourceState, selectLocationState } from './store';
 import { Weather, Location } from './store/interfeces/weathers.interfaces';
 import { Observable } from 'rxjs';
+import * as moment from 'moment/moment';
 
 @Component({
   selector: 'app-root',

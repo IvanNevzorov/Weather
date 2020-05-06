@@ -10,5 +10,4 @@ import { Weather } from 'src/app/store/interfeces/weathers.interfaces';
 export class OpenWeatherMapComponent {
     @Input() weather: Weather;
     constructor() { }
-
 }

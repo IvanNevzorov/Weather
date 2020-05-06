@@ -12,7 +12,7 @@ export interface Location {
     point: {
         lng: number;
         lat: number;
-    }
+    };
 }
 
 export interface WeatherStackAPI {
@@ -22,7 +22,7 @@ export interface WeatherStackAPI {
         weather_descriptions: string[];
         wind_speed: number;
         humidity: number;
-    }
+    };
 }
 
 export interface OpenWeatherMapAPI {
@@ -37,6 +37,11 @@ export interface OpenWeatherMapAPI {
     weather: [{
         description: string;
     }];
+}
+
+export interface WeatherStorage {
+    weather: Weather;
+    saveTime: string;
 }
 
 export interface Weather {

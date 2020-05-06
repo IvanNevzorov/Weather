@@ -4,8 +4,6 @@ import { AddLocationAction, GetLocationAction } from 'src/app/store/actions/weat
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { selectLocationState } from 'src/app/store';
 import { LocationService } from 'src/app/services/location.service';
-import * as moment from 'moment/moment';
-import { throttleTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-select-weather',
@@ -25,7 +23,7 @@ export class SelectWeatherComponent implements OnInit {
         this.locationService.getLocation().subscribe(data => {
             this.store.dispatch(new GetLocationAction(data));
             // this.store.pipe(select(selectLocationState)).subscribe(data => this.locationInfo = data);
-        })
+        });
 
         this.selectWeatherForm = this.fb.group({
             city: this.fb.control('', []),
