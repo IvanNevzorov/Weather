@@ -7,7 +7,7 @@ import { StorageService } from '../services/storage.service';
 import { WeatherStorage, Weather } from '../store/interfeces/weathers.interfaces';
 
 @Injectable()
-export class HeaderInterceptor implements HttpInterceptor {
+export class HttpWeatherInterceptor implements HttpInterceptor {
     constructor(private storageService: StorageService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

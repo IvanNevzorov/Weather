@@ -55,15 +55,12 @@ export class LocationComponent implements OnInit {
                     switch (formData.select) {
                         case 'weatherStack':
                             this.store.dispatch(new WeatherStackLoadAction(location));
-                            subscriber.unsubscribe();
                             break;
                         case 'weatherStack':
                             this.store.dispatch(new OpenWeatherMapLoadAction(location));
-                            subscriber.unsubscribe();
                             break;
 
                         default:
-                            subscriber.unsubscribe();
                             break;
                     }
                 }
