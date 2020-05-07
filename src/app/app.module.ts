@@ -7,16 +7,14 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { WeathersEffecrs } from './store/effects/weathrs.effects';
 import { reducers } from './store';
-import { WeatherStackComponent } from './components/wetherstack/wetherstack.component';
-import { SelectWeatherComponent } from './components/select-weather/select-weather.component';
-import { OpenWeatherMapComponent } from './components/openweathermap/openweathermap.component';
+import { LocationComponent } from './components/location/location.component';
+import { WeatherComponent } from './components/weather/weather.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WeatherStackComponent,
-    SelectWeatherComponent,
-    OpenWeatherMapComponent
+    LocationComponent,
+    WeatherComponent
   ],
   imports: [
     BrowserModule,

@@ -3,12 +3,18 @@ export interface LocationAPI {
 }
 
 export interface GeoLocationAPI {
-    hits: Location[];
+    hits: [{
+        country: string;
+        point: {
+            lng: number;
+            lat: number;
+        }
+    }];
 }
 
 export interface Location {
     country: string;
-    name: string;
+    city: string;
     point: {
         lng: number;
         lat: number;

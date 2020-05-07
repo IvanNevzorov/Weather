@@ -1,0 +1,20 @@
+.weather {
+  display: flex;
+  flex-direction: column;
+
+  &__property {
+    display: flex;
+
+    &_name {
+      width: 50%;
+      text-align: right;
+      font-size: 20px;
+    }
+
+    &_value {
+      margin-left: 10px;
+      text-align: left;
+      font-size: 20px;
+    }
+  }
+}

@@ -43,8 +43,8 @@ export class LocationService {
         .set('key', '19fb703c-bd61-4844-bd4d-77d767c37a9a')
     }).pipe(
       map((data: GeoLocationAPI) => {
-        const { country, name, point } = data.hits[0];
-        const result = { country, name, point };
+        const { country, point } = data.hits[0];
+        const result = { country, city, point };
         return result;
       })
     );

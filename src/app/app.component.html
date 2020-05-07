@@ -1,10 +1,4 @@
 <div class="container">
-    <app-select-weather (selectWeather)="templateWeater($event)"></app-select-weather>
-    <div class="weather-view" [ngSwitch]="wetherChoise">
-        <app-weatherstack *ngSwitchCase='"WeatherStack"' [weather]='weatherStackInfo'>
-        </app-weatherstack>
-        <app-openweathermap *ngSwitchCase='"OpenWeatherMap"' [weather]='openWeatherMapInfo'>
-        </app-openweathermap>
-        <div class="default" *ngSwitchDefault></div>
-    </div>
+  <app-location></app-location>
+  <app-weather></app-weather>
 </div>
