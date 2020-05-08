@@ -48,7 +48,6 @@ export class WeathersEffecrs {
     mergeMap((action: WeatherStackLoadAction) =>
       this.weathersService.getWeatherStack(action.payload).pipe(
         map((data: WeatherStackAPI) => {
-          console.log(data);
           const weather: Weather = this.weatherStackSerialaze(data);
           return new WeatherStackLoadSuccessAction(weather);
         }),
@@ -63,7 +62,6 @@ export class WeathersEffecrs {
     mergeMap((action: OpenWeatherMapLoadAction) =>
       this.weathersService.getOpenWeatherMap(action.payload).pipe(
         map((data: OpenWeatherMapAPI) => {
-          console.log(data);
           const weather: Weather = this.openWeatherMapSerialaze(data);
           return new OpenWeatherMapLoadSuccessAction(weather);
         }),

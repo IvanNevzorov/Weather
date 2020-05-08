@@ -52,8 +52,6 @@ export class LocationComponent implements OnInit {
 
                     switch (formData.select) {
                         case 'weatherStack':
-                            console.log(formData.select);
-
                             this.store.dispatch(new WeatherStackLoadAction(location));
                             break;
                         case 'openWeatherMap':

@@ -13,13 +13,14 @@ export class HttpWeatherInterceptor implements HttpInterceptor {
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (req.url.includes(WeathersUrlType.weatherstack) || req.url.includes(WeathersUrlType.openweathermap)) {
             if (this.storageService.checkWeather(req.urlWithParams)) {
-                const body: HttpEvent<WeatherStackAPI | OpenWeatherMapAPI> = this.storageService.getWeather(req.urlWithParams).event;
-                return of(body);
+                const body: WeatherStackAPI | OpenWeatherMapAPI = this.storageService.getWeather(req.urlWithParams).weatherAPI;
+                const response = of(new HttpResponse({body}));
+                return response;
             } else {
                 return next.handle(req).pipe(
                     tap((event: HttpEvent<WeatherStackAPI | OpenWeatherMapAPI>) => {
                         if (event instanceof HttpResponse) {
-                            this.storageService.setWeather(event, req.urlWithParams);
+                            this.storageService.setWeather(event.body, req.urlWithParams);
                         }
                     })
                 );

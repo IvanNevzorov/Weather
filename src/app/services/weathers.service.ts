@@ -15,8 +15,6 @@ export class WeathersService {
 
   public getWeatherStack({ point }: Location): Observable<WeatherStackAPI> {
     const queryCoordinates = `${point.lat.toFixed(4)},${point.lng.toFixed(4)}`;
-    console.log(point);
-
     return this.http
       .get(WeathersUrlType.weatherstack, {
         params: new HttpParams()

@@ -48,7 +48,7 @@ export interface OpenWeatherMapAPI {
 }
 
 export interface WeatherStorage {
-    event: HttpEvent<WeatherStackAPI | OpenWeatherMapAPI>;
+  weatherAPI: WeatherStackAPI | OpenWeatherMapAPI;
     saveTime: string;
 }
 

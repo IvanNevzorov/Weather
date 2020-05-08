@@ -14,9 +14,9 @@ export class StorageService {
     return JSON.parse(localStorage.getItem(url));
   }
 
-  public setWeather(event: HttpEvent<WeatherStackAPI | OpenWeatherMapAPI>, url: string): void {
+  public setWeather(weatherAPI: WeatherStackAPI | OpenWeatherMapAPI, url: string): void {
     const saveTime = moment().toISOString();
-    localStorage.setItem(url, JSON.stringify({ event, saveTime }));
+    localStorage.setItem(url, JSON.stringify({ weatherAPI, saveTime }));
   }
 
   public checkWeather(url: string): boolean {
