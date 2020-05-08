@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { WeatherStackAPI, OpenWeatherMapAPI, Location, Weather } from '../store/interfeces/weathers.interfaces';
-import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
 
 export enum WeathersUrlType {
@@ -12,54 +11,29 @@ export enum WeathersUrlType {
 
 @Injectable({ providedIn: 'root' })
 export class WeathersService {
-  constructor(private http: HttpClient, private storage: StorageService) {}
+  constructor(private http: HttpClient) { }
 
-  public getWeatherStack({ point }: Location): Observable<Weather> {
-    const queryCoordinates = `${point.lng.toFixed(4)}, ${point.lat.toFixed(4)}`;
-    console.log(queryCoordinates);
+  public getWeatherStack({ point }: Location): Observable<WeatherStackAPI> {
+    const queryCoordinates = `${point.lat.toFixed(4)},${point.lng.toFixed(4)}`;
+    console.log(point);
+
     return this.http
       .get(WeathersUrlType.weatherstack, {
-        params: new HttpParams().set(`access_key`, 'f8a2ca6d0dfb37f60b8f7eaa9aae45e3').set(`query`, queryCoordinates),
-      })
-      .pipe(
-        map((data: WeatherStackAPI) => {
-          const { temperature, feelslike, weather_descriptions, wind_speed, humidity } = data.current;
-          const result = {
-            resourse: 'WeatherStack',
-            temperature,
-            feels_like: feelslike,
-            description: weather_descriptions[0],
-            wind_speed,
-            humidity,
-          };
-          return result;
-        })
+        params: new HttpParams()
+          .set(`access_key`, 'f8a2ca6d0dfb37f60b8f7eaa9aae45e3')
+          .set(`query`, queryCoordinates)
+      }).pipe(
+        map((data: WeatherStackAPI) => data)
       );
   }
 
-  public getOpenWeatherMap({ point }: Location): Observable<Weather> {
-    const queryCoordinates = `${point.lng.toFixed(4)}, ${point.lat.toFixed(4)}`;
+  public getOpenWeatherMap({ point }: Location): Observable<OpenWeatherMapAPI> {
     return this.http
       .get(WeathersUrlType.openweathermap, {
-        params: new HttpParams().set(`q`, queryCoordinates).set(`appid`, 'bad363469dcde2c6fae81f5295fc72d3'),
+        params: new HttpParams().set(`lat`, `${point.lat}`).set(`lon`, `${point.lng}`).set(`appid`, 'bad363469dcde2c6fae81f5295fc72d3'),
       })
       .pipe(
-        map((data: OpenWeatherMapAPI) => {
-          const {
-            main: { temp, feels_like, humidity },
-            wind: { speed },
-            weather: [{ description }],
-          } = data;
-          const result = {
-            resourse: 'OpenWeatherMap',
-            temperature: Math.ceil(temp - 273),
-            feels_like: Math.ceil(feels_like - 273),
-            description,
-            wind_speed: speed,
-            humidity,
-          };
-          return result;
-        })
+        map((data: OpenWeatherMapAPI) => data)
       );
   }
 }

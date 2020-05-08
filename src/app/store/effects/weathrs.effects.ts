@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { of, iif } from 'rxjs';
-import { Weather, Location } from '../interfeces/weathers.interfaces';
+import { Weather, Location, WeatherStackAPI, OpenWeatherMapAPI } from '../interfeces/weathers.interfaces';
 
 @Injectable({ providedIn: 'root' })
 
@@ -47,7 +47,11 @@ export class WeathersEffecrs {
     ofType(WeathersActionTypes.WeatherStackLoad),
     mergeMap((action: WeatherStackLoadAction) =>
       this.weathersService.getWeatherStack(action.payload).pipe(
-        map((data: Weather) => new WeatherStackLoadSuccessAction(data)),
+        map((data: WeatherStackAPI) => {
+          console.log(data);
+          const weather: Weather = this.weatherStackSerialaze(data);
+          return new WeatherStackLoadSuccessAction(weather);
+        }),
         catchError(() => of(new WeatherStackLoadErrorAction()))
       )
     )
@@ -57,12 +61,44 @@ export class WeathersEffecrs {
   public OpenWeatherMapLoad$ = this.actions$.pipe(
     ofType(WeathersActionTypes.OpenWeatherMapLoad),
     mergeMap((action: OpenWeatherMapLoadAction) =>
-      this.weathersService.getWeatherStack(action.payload).pipe(
-        map((data: Weather) => new OpenWeatherMapLoadSuccessAction(data)),
+      this.weathersService.getOpenWeatherMap(action.payload).pipe(
+        map((data: OpenWeatherMapAPI) => {
+          console.log(data);
+          const weather: Weather = this.openWeatherMapSerialaze(data);
+          return new OpenWeatherMapLoadSuccessAction(weather);
+        }),
         catchError(() => of(new OpenWeatherMapLoadErrorAction()))
       )
     )
   );
+
+  public weatherStackSerialaze(weatherAPI: WeatherStackAPI): Weather {
+    const { temperature, feelslike, weather_descriptions, wind_speed, humidity } = weatherAPI.current;
+    return {
+      resourse: 'WeatherStack',
+      temperature,
+      feels_like: feelslike,
+      description: weather_descriptions[0],
+      wind_speed,
+      humidity,
+    };
+  }
+
+  public openWeatherMapSerialaze(weatherAPI: OpenWeatherMapAPI): Weather {
+    const {
+      main: { temp, feels_like, humidity },
+      wind: { speed },
+      weather: [{ description }],
+    } = weatherAPI;
+    return {
+      resourse: 'OpenWeatherMap',
+      temperature: Math.ceil(temp - 273),
+      feels_like: Math.ceil(feels_like - 273),
+      description,
+      wind_speed: speed,
+      humidity,
+    };
+  }
 
   constructor(
     private actions$: Actions,

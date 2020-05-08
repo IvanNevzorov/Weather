@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { GetLocationAction, InitLocationAction, WeatherStackLoadAction, OpenWeatherMapLoadAction } from 'src/app/store/actions/weathers.action';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { selectLocationState } from 'src/app/store';
 import { Location } from 'src/app/store/interfeces/weathers.interfaces';
@@ -27,8 +27,8 @@ export class LocationComponent implements OnInit {
 
     public initForm(): void {
         this.locationForm = this.fb.group({
-            city: this.fb.control('', []),
-            select: this.fb.control('', [])
+            city: this.fb.control('', [Validators.required]),
+            select: this.fb.control('', [Validators.required])
         });
     }
 
@@ -36,9 +36,7 @@ export class LocationComponent implements OnInit {
         this.store.dispatch(new InitLocationAction());
         const subscriber = this.locationState$.subscribe(location => {
             if (location.city) {
-                console.log(location);
                 this.locationForm.patchValue({ city: location.city });
-                this.store.dispatch(new InitLocationAction());
                 this.store.dispatch(new WeatherStackLoadAction(location));
                 subscriber.unsubscribe();
             }
@@ -49,14 +47,16 @@ export class LocationComponent implements OnInit {
         if (this.locationForm.valid) {
             const formData = { ...this.locationForm.value };
             this.store.dispatch(new GetLocationAction(formData.city));
-            const subscriber = this.locationState$.subscribe((location) => {
-                console.log(formData, location);
+            this.locationState$.subscribe((location) => {
                 if (location.city === formData.city) {
+
                     switch (formData.select) {
                         case 'weatherStack':
+                            console.log(formData.select);
+
                             this.store.dispatch(new WeatherStackLoadAction(location));
                             break;
-                        case 'weatherStack':
+                        case 'openWeatherMap':
                             this.store.dispatch(new OpenWeatherMapLoadAction(location));
                             break;
 

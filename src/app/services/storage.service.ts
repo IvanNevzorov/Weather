@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Weather, WeatherStorage } from '../store/interfeces/weathers.interfaces';
+import { WeatherStorage, WeatherStackAPI, OpenWeatherMapAPI, Weather } from '../store/interfeces/weathers.interfaces';
 import * as moment from 'moment/moment';
+import { WeathersUrlType } from './weathers.service';
+import { HttpEvent } from '@angular/common/http';
+import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 
@@ -11,18 +14,19 @@ export class StorageService {
     return JSON.parse(localStorage.getItem(url));
   }
 
-  public setWeather(weather: Weather, url: string): void {
+  public setWeather(event: HttpEvent<WeatherStackAPI | OpenWeatherMapAPI>, url: string): void {
     const saveTime = moment().toISOString();
-    const data = { weather, saveTime };
-    localStorage.setItem(url, JSON.stringify(data));
+    localStorage.setItem(url, JSON.stringify({ event, saveTime }));
   }
 
   public checkWeather(url: string): boolean {
-    if (!this.getWeather(url)) { return false; }
-    const timeForCheck = moment();
-    const timeDifference = moment.duration(timeForCheck.diff(this.getWeather(url).saveTime));
-    if (timeDifference.as('hours') >= 2) {
-      return true;
+    if (this.getWeather(url)) {
+      const timeForCheck = moment();
+      const timeDifference = moment.duration(timeForCheck.diff(this.getWeather(url).saveTime));
+      if (timeDifference.as('hours') <= 2) {
+        return true;
+      } else { return false; }
     } else { return false; }
   }
+
 }
