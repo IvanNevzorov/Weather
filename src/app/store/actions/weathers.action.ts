@@ -1,7 +1,10 @@
 import { Action } from '@ngrx/store';
-import { Weather, Location } from '../interfeces/weathers.interfaces';
+import { Weather, Location, WeatherCapital } from '../interfeces/weathers.interfaces';
 
 export enum WeathersActionTypes {
+  GetCapitals = '[Capitals] Init Capitals',
+  AddCapitals = '[Capitals] Get Capitals',
+
   InitLocation = '[Location] Init Location',
   GetLocation = '[Location] Get Location',
   AddLocation = '[Location] Add Location',
@@ -12,6 +15,18 @@ export enum WeathersActionTypes {
   OpenWeatherMapLoad = '[Weather] Get OpenWeatherMap',
   OpenWeatherMapLoadSuccess = '[Weather] Load Success OpenWeatherMap',
   OpenWeatherMapLoadError = '[Weather] Load Error OpenWeatherMap'
+}
+
+export class GetCapitalsAction implements Action {
+  readonly type = WeathersActionTypes.GetCapitals;
+
+  constructor(public payload: Location) { }
+}
+
+export class AddCapitalsAction implements Action {
+  readonly type = WeathersActionTypes.AddCapitals;
+
+  constructor(public payload: WeatherCapital) { }
 }
 
 export class InitLocationAction implements Action {
@@ -63,6 +78,8 @@ export class OpenWeatherMapLoadErrorAction implements Action {
 }
 
 export type WeatherUnionAction =
+  | GetCapitalsAction
+  | AddCapitalsAction
   | InitLocationAction
   | GetLocationAction
   | AddLocationAction

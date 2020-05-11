@@ -1,28 +1,33 @@
-import * as weatherReduser from './redusers/weathers.reduser';
+import * as weathersReduser from './redusers/weathers.reduser';
 import { ActionReducerMap } from '@ngrx/store';
 import { createSelector } from '@ngrx/store';
 
 export interface State {
-    weatherStore: weatherReduser.State;
+    weatherStore: weathersReduser.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
-    weatherStore: weatherReduser.reducer
+    weatherStore: weathersReduser.reducer
 };
 
 export const selectWeatherAPIStore = (state: State) => state.weatherStore;
 
 export const selectLocationState = createSelector(
     selectWeatherAPIStore,
-    (weatherStore: weatherReduser.State) => weatherStore.location
+    (weatherStore: weathersReduser.State) => weatherStore.location
 );
 
 export const selectWeatherState = createSelector(
     selectWeatherAPIStore,
-    (weatherStore: weatherReduser.State) => weatherStore.weather
+    (weatherStore: weathersReduser.State) => weatherStore.weather
+);
+
+export const selectCapitalsState = createSelector(
+  selectWeatherAPIStore,
+  (weatherStore: weathersReduser.State) => weatherStore.capitals
 );
 
 export const selectResourceState = createSelector(
     selectWeatherAPIStore,
-    (weatherStore: weatherReduser.State) => weatherStore.resource
+    (weatherStore: weathersReduser.State) => weatherStore.resource
 );

@@ -28,7 +28,10 @@ export class WeathersService {
   public getOpenWeatherMap({ point }: Location): Observable<OpenWeatherMapAPI> {
     return this.http
       .get(WeathersUrlType.openweathermap, {
-        params: new HttpParams().set(`lat`, `${point.lat}`).set(`lon`, `${point.lng}`).set(`appid`, 'bad363469dcde2c6fae81f5295fc72d3'),
+        params: new HttpParams()
+        .set(`lat`, `${point.lat}`)
+        .set(`lon`, `${point.lng}`)
+        .set(`appid`, 'bad363469dcde2c6fae81f5295fc72d3'),
       })
       .pipe(
         map((data: OpenWeatherMapAPI) => data)

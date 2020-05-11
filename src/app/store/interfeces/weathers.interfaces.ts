@@ -1,5 +1,3 @@
-import { HttpEvent } from '@angular/common/http';
-
 export interface LocationAPI {
     city: string;
 }
@@ -7,6 +5,7 @@ export interface LocationAPI {
 export interface GeoLocationAPI {
     hits: [{
         country: string;
+        name: string;
         point: {
             lng: number;
             lat: number;
@@ -21,6 +20,16 @@ export interface Location {
         lng: number;
         lat: number;
     };
+}
+
+export interface WeatherCapital {
+  capital: string;
+  temperature: number;
+  description: string;
+}
+
+export interface Capitals {
+  [id: string]: WeatherCapital;
 }
 
 export interface WeatherStackAPI {
@@ -51,6 +60,8 @@ export interface WeatherStorage {
   weatherAPI: WeatherStackAPI | OpenWeatherMapAPI;
     saveTime: string;
 }
+
+
 
 export interface Weather {
     resourse: string;
