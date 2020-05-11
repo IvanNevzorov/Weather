@@ -1,60 +1,32 @@
-<div class="weather">
-  <div class="weather__property">
-    <div class="weather__property_name">
-      <p>Location:</p>
-    </div>
-    <div class="weather__property_value">
-      <p>{{ locationInfo.city }}</p>
-    </div>
+<materialize-card class="weather-card">
+  <div class="weather-card__resource">
+    <p>{{ weatherInfo.resourse }}</p>
   </div>
-  <div class="weather__property">
-    <div class="weather__property_name">
-      <p>Resourse:</p>
-    </div>
-    <div class="weather__property_value">
-      <p>{{ weatherInfo.resourse }}</p>
-    </div>
+  <div class="weather-card__city">
+    <p>{{ locationInfo.city }}</p>
   </div>
-  <div class="weather__property">
-    <div class="weather__property_name">
-      <p>Temperature:</p>
-    </div>
-    <div class="weather__property_value">
-      <p>{{ weatherInfo.temperature }} &deg;</p>
-    </div>
+  <div class="weather-card__temperature">
+    <p>{{ weatherInfo.temperature }} &deg;</p>
+    <p class="description">({{ weatherInfo.description }})</p>
   </div>
-  <div class="weather__property">
-    <div class="weather__property_name">
-      <p>Feels like:</p>
-    </div>
-    <div class="weather__property_value">
+  <div class="weather-card__info">
+    <div class="weather-card__info_item">
+      <p>Feels like</p>
       <p>{{ weatherInfo.feels_like }} &deg;</p>
     </div>
-  </div>
-  <div class="weather__property">
-    <div class="weather__property_name">
-      <p>Description:</p>
-    </div>
-    <div class="weather__property_value">
-      <p>{{ weatherInfo.description }}</p>
-    </div>
-  </div>
-  <div class="weather__property">
-    <div class="weather__property_name">
-      <p>Wind speed:</p>
-    </div>
-    <div class="weather__property_value">
+    <div class="weather-card__info_item">
+      <p>Wind speed</p>
       <p>{{ weatherInfo.wind_speed }}m/s</p>
     </div>
   </div>
-  <div class="weather__property">
-    <div class="weather__property_name">
-      <p>Humidity:</p>
+
+  <div class="weather-card__capital" *ngFor="let capital of capitalsInfo">
+    <div class="weather-card__capital_name">
+      <p>{{ capital.capital }}</p>
     </div>
-    <div class="weather__property_value">
-      <p>{{ weatherInfo.humidity }}%</p>
+    <div class="weather-card__capital_info">
+      <p>{{ capital.temperature }} &deg;</p>
+      <p class="description">({{ capital.description }})</p>
     </div>
   </div>
-
-
-</div>
+</materialize-card>

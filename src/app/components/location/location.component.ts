@@ -22,7 +22,6 @@ export class LocationComponent implements OnInit {
 
     ngOnInit() {
         this.initForm();
-        this.initLocation();
     }
 
     public initForm(): void {
@@ -32,24 +31,12 @@ export class LocationComponent implements OnInit {
         });
     }
 
-    public initLocation(): void {
-        this.store.dispatch(new InitLocationAction());
-        const subscriber = this.locationState$.subscribe(location => {
-            if (location.city) {
-                this.locationForm.patchValue({ city: location.city });
-                this.store.dispatch(new WeatherStackLoadAction(location));
-                subscriber.unsubscribe();
-            }
-        });
-    }
-
     public submit(): void {
         if (this.locationForm.valid) {
             const formData = { ...this.locationForm.value };
             this.store.dispatch(new GetLocationAction(formData.city));
             this.locationState$.subscribe((location) => {
-                if (location.city === formData.city) {
-
+                if (location.city) {
                     switch (formData.select) {
                         case 'weatherStack':
                             this.store.dispatch(new WeatherStackLoadAction(location));
@@ -62,7 +49,6 @@ export class LocationComponent implements OnInit {
                             break;
                     }
                 }
-
             });
         }
     }

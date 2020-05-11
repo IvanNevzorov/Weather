@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WeatherStorage, WeatherStackAPI, OpenWeatherMapAPI, Weather } from '../store/interfeces/weathers.interfaces';
 import * as moment from 'moment/moment';
-import { WeathersUrlType } from './weathers.service';
-import { HttpEvent } from '@angular/common/http';
-import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 

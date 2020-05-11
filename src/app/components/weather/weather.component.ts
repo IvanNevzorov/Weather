@@ -3,7 +3,7 @@ import { Weather, Location, WeatherCapital, Capitals } from 'src/app/store/inter
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectWeatherState, selectLocationState, selectCapitalsState } from 'src/app/store';
-import { GetCapitalsAction } from 'src/app/store/actions/weathers.action';
+import { GetCapitalsAction, InitLocationAction, WeatherStackLoadAction } from 'src/app/store/actions/weathers.action';
 
 @Component({
   selector: 'app-weather',
@@ -13,11 +13,11 @@ import { GetCapitalsAction } from 'src/app/store/actions/weathers.action';
 
 export class WeatherComponent implements OnInit {
   public capitalsNames: Location[] = [
-    { country: 'France', city: 'Paris', point: { lng: 2.3514, lat: 48.8566 }},
-    { country: 'Russia', city: 'Moscow', point: { lng: 37.6174, lat: 55.7504 }},
-    { country: 'United Kingdom', city: 'London', point: { lng: -0.1276, lat: 51.5073 }},
-    { country: 'Germany', city: 'Berlin', point: { lng: 13.3888, lat: 52.5170 }},
-    { country: 'Czech Republic', city: 'Prague', point: { lng: 14.4212, lat: 50.0874 }},
+    { country: 'France', city: 'Paris', point: { lng: 2.3514, lat: 48.8566 } },
+    { country: 'Russia', city: 'Moscow', point: { lng: 37.6174, lat: 55.7504 } },
+    { country: 'United Kingdom', city: 'London', point: { lng: -0.1276, lat: 51.5073 } },
+    { country: 'Germany', city: 'Berlin', point: { lng: 13.3888, lat: 52.5170 } },
+    { country: 'Czech Republic', city: 'Prague', point: { lng: 14.4212, lat: 50.0874 } },
   ];
   public weatherInfo: Weather;
   public capitalsInfo: WeatherCapital[] = [];
@@ -30,8 +30,9 @@ export class WeatherComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.capitalsNames.forEach(item => this.store.dispatch(new GetCapitalsAction(item)));
+    this.store.dispatch(new InitLocationAction());
 
+    this.capitalsNames.forEach(item => this.store.dispatch(new GetCapitalsAction(item)));
     this.capitalsState$.subscribe(capitalsState => {
       for (const capitalName in capitalsState) {
         if (!this.capitalsInfo.find(item => item.capital === capitalName)) {
@@ -47,6 +48,9 @@ export class WeatherComponent implements OnInit {
 
     this.locationState$.subscribe(location => {
       this.locationInfo = location;
+      if (location.city) {
+        this.store.dispatch(new WeatherStackLoadAction(location));
+      }
     });
   }
 

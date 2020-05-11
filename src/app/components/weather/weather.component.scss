@@ -1,20 +1,70 @@
-.weather {
+@import '../../../mixins';
+.weather-card {
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 
-  &__property {
-    display: flex;
+  @include media-phones {
+    margin-top: 0px;
+  }
 
-    &_name {
-      width: 50%;
-      text-align: right;
-      font-size: 20px;
+  &__resource {
+    @include weather-card {
+      font-size: 12px;
+    }
+  }
+
+  &__city {
+    @include weather-card {
+      font-size: 24px;
+      padding-top: 15px;
+    }
+  }
+
+  &__temperature {
+    @include weather-card {
+      font-size: 60px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+  }
+
+  &__info {
+    @include weather-card {
+      flex-direction: column;
+      border-top: 1px solid #88bbff;
+      border-bottom: 1px solid #88bbff;
+      background-color: #9cabff;
+      margin-bottom: 15px;
     }
 
-    &_value {
-      margin-left: 10px;
-      text-align: left;
-      font-size: 20px;
+    &_item {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 15px;
+      padding-bottom: 15px;
     }
+  }
+
+  &__capital {
+    @include weather-card {
+      justify-content: space-between;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #88bbff;
+    }
+
+    &_info {
+      display: flex;
+    }
+  }
+
+  &__capital:last-child {
+    border-bottom: none;
+  }
+}
+.description {
+  @include media-phones {
+    display: none;
   }
 }

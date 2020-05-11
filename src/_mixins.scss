@@ -1,0 +1,24 @@
+@mixin weather-card {
+  display: flex;
+  justify-content: center;
+  color: #ffffff;
+  @content;
+}
+
+@mixin media-laptops {
+  @media only screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin media-tablets {
+  @media only screen and (max-width: 800px) {
+    @content;
+  }
+}
+
+@mixin media-phones {
+  @media only screen and (max-width: 600px) {
+    @content;
+  }
+}

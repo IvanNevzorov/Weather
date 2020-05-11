@@ -1,16 +1,18 @@
-<form class="select-weather" (ngSubmit)="submit()" [formGroup]="locationForm">
-  <div class="select-weather__location-group">
-    <div class="select-weather__location-group_item">
-      <label for=""></label>
-      <input type="text" formControlName="city" />
-    </div>
-    <div class="select-weather__location-group_item">
-      <label for=""></label>
-      <select formControlName="select">
-        <option value="weatherStack">Weather Stack</option>
-        <option value="openWeatherMap">Open Weather Map</option>
-      </select>
-    </div>
-  </div>
-  <button class="select-weather__btn" type="submit" [disabled]="locationForm.invalid">Получить</button>
-</form>
+<materialize-card class="location-card">
+  <form class="location-card__form" (ngSubmit)="submit()" [formGroup]="locationForm">
+    <materialize-input
+      floatLabel="Enter location"
+      formControlName="city"
+      class="location-card__form_input"
+    ></materialize-input>
+
+    <materialize-select floatLabel="Select resource" formControlName="select" class="location-card__form_select">
+      <materialize-select-option value="weatherStack">Weather Stack</materialize-select-option>
+      <materialize-select-option value="openWeatherMap">Open Weather Map</materialize-select-option>
+    </materialize-select>
+
+    <materialize-button type="submit" [disabled]="locationForm.invalid" class="location-card__form_button">
+      Show the weather
+    </materialize-button>
+  </form>
+</materialize-card>

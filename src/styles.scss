@@ -1,7 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'mixins';
+
 body {
   width: 100%;
   height: 100vh;
-  background: rgb(65, 54, 84);
-  background: linear-gradient(0deg, rgba(65, 54, 84, 1) 0%, rgba(131, 98, 115, 1) 100%);
+  background: #74bef0;
 }
+
+$materialize-fonts-path: '~materialize-angular/fonts';
+
+$materialize-card-background: linear-gradient(
+  0deg,
+  rgba(83, 189, 247, 1) 0%,
+  rgba(119, 171, 255, 1) 47%,
+  rgba(151, 163, 255, 1) 100%
+);
+$materialize-form-control-container-margin: 5px;
+$materialize-form-control-container-line-color: #0750f6;
+$materialize-form-control-focused-label-color: #0750f6;
+
+$materialize-button-accent-background: #3873f7;
+$materialize-button-accent-hover-background: #0750f6;
+
+$materialize-card-margin: 0px;
+
+@import '~materialize-angular/styles/materialize-angular.scss';

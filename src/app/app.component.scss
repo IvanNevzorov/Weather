@@ -1,0 +1,19 @@
+@import '../mixins';
+.container {
+  width: 40%;
+  margin: 0 auto;
+  padding: 5px;
+
+  @include media-laptops {
+    width: 60%;
+  }
+
+  @include media-tablets {
+    width: 80%;
+  }
+
+  @include media-phones {
+    width: 100%;
+    padding: 0px;
+  }
+}

@@ -10,6 +10,7 @@ import { WeathersEffecrs } from './store/effects/weathrs.effects';
 import { reducers } from './store';
 import { LocationComponent } from './components/location/location.component';
 import { WeatherComponent } from './components/weather/weather.component';
+import { MaterializeButtonModule, MaterializeCardModule, MaterializeSelectModule, MaterializeInputModule } from 'materialize-angular';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,11 @@ import { WeatherComponent } from './components/weather/weather.component';
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([WeathersEffecrs]),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterializeButtonModule,
+    MaterializeCardModule,
+    MaterializeSelectModule,
+    MaterializeInputModule
   ],
   providers: [
     {
