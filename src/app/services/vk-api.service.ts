@@ -64,7 +64,6 @@ export class VkApiService {
                     this.sessionService.createSession(response.session.user.id, true);
                     this.getProfile();
                     this.router.navigate(['profile']);
-                    console.log('Logged in and authenticated!');
                 } else {
                     console.log('Not authenticated!');
                 }

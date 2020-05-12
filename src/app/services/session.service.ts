@@ -14,7 +14,7 @@ export class SessionService {
         this.storage.set('id', val);
     }
 
-    private saveSessionStatus(val) {
+    private saveSessionStatus(val: boolean): void {
         this.storage.set('isLoggedIn', val);
     }
 
@@ -22,7 +22,7 @@ export class SessionService {
         return this.storage.get('id');
     }
 
-    public getSessionStatus() {
+    public getSessionStatus(): boolean {
         return this.storage.get('isLoggedIn');
     }
 
