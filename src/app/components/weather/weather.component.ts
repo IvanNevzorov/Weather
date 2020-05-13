@@ -30,8 +30,6 @@ export class WeatherComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new InitLocationAction());
-
     this.capitalsNames.forEach(item => this.store.dispatch(new GetCapitalsAction(item)));
     this.capitalsState$.subscribe(capitalsState => {
       for (const capitalName in capitalsState) {

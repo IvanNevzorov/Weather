@@ -24,15 +24,14 @@ import { SerializeService } from 'src/app/services/serialize.service';
 
 export class WeathersEffecrs {
 
-@Effect()
+  @Effect()
   public getCapitals$ = this.actions$.pipe(
     ofType(WeathersActionTypes.GetCapitals),
     mergeMap((action: GetCapitalsAction) =>
-    this.weathersService.getWeatherStack(action.payload).pipe(
+      this.weathersService.getWeatherStack(action.payload).pipe(
         map((weatherData: WeatherStackAPI) => {
           const weatherCapital: WeatherCapital =
             this.serializeService.weatherStackCapitalAPI(weatherData, action.payload.city);
-          console.log(weatherCapital);
           return new AddCapitalsAction(weatherCapital);
         })
       )
@@ -58,7 +57,7 @@ export class WeathersEffecrs {
     mergeMap((action: GetLocationAction) =>
       this.locationService.getGeoLocation(action.payload).pipe(
         map((data: GeoLocationAPI) => {
-          const location = this.serializeService.geoLocationAPI(data);
+          const location = this.serializeService.geoLocationAPI(data, action.payload);
           return new AddLocationAction(location);
         })
       )

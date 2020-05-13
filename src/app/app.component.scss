@@ -19,12 +19,47 @@
 
   .navbar {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
+    align-items: stretch;
+
+    a {
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    .active {
+      color: #0750f6;
+    }
+
+    a:hover {
+      color: #0750f6;
+    }
 
     &__links {
       display: flex;
+      list-style-type: none;
+      justify-content: space-between;
+      align-items: center;
+
+      &_item {
+        margin-right: 3vw;
+      }
+
+      &_item:active {
+        color: #0750f6;
+      }
+    }
+
+    &__buttons {
+      &_logout {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .logout {
+          margin-left: 3vw;
+        }
+      }
     }
   }
 }
-

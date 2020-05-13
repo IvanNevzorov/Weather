@@ -1,0 +1,20 @@
+.card {
+  width: 100%;
+}
+.profile-card {
+  display: flex;
+  justify-content: space-between;
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50%;
+    color: #ffffff;
+
+    &_item {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

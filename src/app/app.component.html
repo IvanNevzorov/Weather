@@ -1,23 +1,22 @@
-
-
 <div id="vk_api_transport"></div>
 <materialize-navbar>
   <div class="container">
     <div class="navbar">
-      <ul class="navbar__links" >
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/weather" routerLinkActive="active">Weather</a>
+      <ul class="navbar__links">
+        <li class="navbar__links_item">
+          <a routerLink="/weather" routerLinkActive="active">Weather</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/location" routerLinkActive="active">Location</a>
+        <li class="navbar__links_item">
+          <a routerLink="/location" routerLinkActive="active">Location</a>
         </li>
       </ul>
       <div class="navbar__buttons">
-        <div class="navbar__buttons_login" *ngIf ="!this.sessionService.getSessionStatus()">
+        <div class="navbar__buttons_login" *ngIf="!isLogin">
           <materialize-button (click)="login()">Sign in</materialize-button>
         </div>
-        <div class="navbar__buttons_logout" *ngIf ="this.sessionService.getSessionStatus()">
-          <materialize-button (click)="logout()">Sign out</materialize-button>
+        <div class="navbar__buttons_logout" *ngIf="isLogin">
+          <a routerLink="/profile" routerLinkActive="active">Profile</a>
+          <materialize-button class="logout" (click)="logout()">Sign out</materialize-button>
         </div>
       </div>
     </div>

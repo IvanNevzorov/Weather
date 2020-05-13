@@ -8,19 +8,30 @@ import {
   WeatherCapital
 } from './../store/interfeces/weathers.interfaces';
 import { Injectable } from '@angular/core';
+import { Session, UserAPI, User } from '../store/interfeces/users.interfaces';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class SerializeService {
   constructor() { }
+
+  public userAPI(data: UserAPI): User {
+    const { city: { title }, first_name, last_name, photo_100 } = data.response[0];
+    return {
+      firstName: first_name,
+      lastName: last_name,
+      city: title,
+      photoUrl: photo_100
+    };
+  }
 
   public locationAPI(locationAPI: LocationAPI): string {
     const { city } = locationAPI;
     return city;
   }
 
-  public geoLocationAPI(geoLocationAPI: GeoLocationAPI): Location {
+  public geoLocationAPI(geoLocationAPI: GeoLocationAPI, city?: string): Location {
     const { country, name, point } = geoLocationAPI.hits[0];
-    return { country, city: name, point };
+    return { country, city: city || name, point };
   }
 
   public weatherStackCapitalAPI(weatherAPI: WeatherStackAPI, capital: string): WeatherCapital {

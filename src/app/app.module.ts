@@ -19,12 +19,14 @@ import {
   MaterializeTabGroupModule
 } from 'materialize-angular';
 import { AppRoutingModule } from './app-routing.module';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LocationComponent,
-    WeatherComponent
+    WeatherComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
