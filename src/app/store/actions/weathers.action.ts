@@ -3,8 +3,6 @@ import { Weather, Location, WeatherCapital } from '../interfeces/weathers.interf
 import { Session, User } from '../interfeces/users.interfaces';
 
 export enum WeathersActionTypes {
-  Inititialization = '[Inititialization] Inititialization',
-
   AddSession = '[Users] Add Session',
   AddUser = '[Users] Add User',
 
@@ -21,9 +19,6 @@ export enum WeathersActionTypes {
   OpenWeatherMapLoad = '[Weather] Get OpenWeatherMap',
   OpenWeatherMapLoadSuccess = '[Weather] Load Success OpenWeatherMap',
   OpenWeatherMapLoadError = '[Weather] Load Error OpenWeatherMap'
-}
-export class InitializationAction implements Action {
-  readonly type = WeathersActionTypes.Inititialization;
 }
 
 export class AddSessionAction implements Action {
@@ -99,7 +94,6 @@ export class OpenWeatherMapLoadErrorAction implements Action {
 }
 
 export type WeatherUnionAction =
-  | InitializationAction
   | AddSessionAction
   | AddUserAction
   | GetCapitalsAction

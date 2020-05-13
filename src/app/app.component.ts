@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { VkApiService } from './services/vk-api.service';
-import { SessionService } from './services/session.service';
 import { Session } from './store/interfeces/users.interfaces';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
@@ -12,10 +11,10 @@ import { InitLocationAction } from './store/actions/weathers.action';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent implements OnInit {
   public isLogin: boolean;
   public sessionState$: Observable<Session> = this.store.pipe(select(selectSessionState));
-
 
   constructor(
     private vkApiService: VkApiService,
@@ -32,7 +31,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  logout() {
+  public logout(): void {
     this.vkApiService.logout();
   }
 

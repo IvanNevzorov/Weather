@@ -45,9 +45,6 @@ const initialState: State = {
 export const reducer = (state: State = initialState, action: WeatherUnionAction) => {
 
   switch (action.type) {
-    case WeathersActionTypes.Inititialization:
-      return state;
-
     case WeathersActionTypes.AddSession:
       return { ...state, session: action.payload };
 

@@ -3,7 +3,7 @@ import { Weather, Location, WeatherCapital, Capitals } from 'src/app/store/inter
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectWeatherState, selectLocationState, selectCapitalsState } from 'src/app/store';
-import { GetCapitalsAction, InitLocationAction, WeatherStackLoadAction } from 'src/app/store/actions/weathers.action';
+import { GetCapitalsAction, WeatherStackLoadAction } from 'src/app/store/actions/weathers.action';
 
 @Component({
   selector: 'app-weather',
@@ -38,7 +38,6 @@ export class WeatherComponent implements OnInit {
         }
       }
     });
-
 
     this.weatherState$.subscribe(weather => {
       this.weatherInfo = weather;

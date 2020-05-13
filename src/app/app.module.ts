@@ -15,8 +15,7 @@ import {
   MaterializeCardModule,
   MaterializeSelectModule,
   MaterializeInputModule,
-  MaterializeNavbarModule,
-  MaterializeTabGroupModule
+  MaterializeNavbarModule
 } from 'materialize-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -40,7 +39,6 @@ import { ProfileComponent } from './components/profile/profile.component';
     MaterializeSelectModule,
     MaterializeInputModule,
     MaterializeNavbarModule,
-    MaterializeTabGroupModule,
     AppRoutingModule
   ],
   providers: [
