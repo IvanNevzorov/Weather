@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { WeatherStackAPI, OpenWeatherMapAPI, Location, Weather } from '../store/interfeces/weathers.interfaces';
+import { WeatherStackAPI, OpenWeatherMapAPI, Location } from '../store/interfeces/weathers.interfaces';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class WeathersService {
+
   constructor(private http: HttpClient) { }
 
   public getWeatherStack({ point }: Location): Observable<WeatherStackAPI> {

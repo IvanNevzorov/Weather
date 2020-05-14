@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WeatherStorage, WeatherStackAPI, OpenWeatherMapAPI, Weather } from '../store/interfeces/weathers.interfaces';
+import { WeatherStorage, WeatherStackAPI, OpenWeatherMapAPI } from '../store/interfeces/weathers.interfaces';
 import * as moment from 'moment/moment';
 
 @Injectable({ providedIn: 'root' })

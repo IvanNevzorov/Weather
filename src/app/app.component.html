@@ -1,4 +1,30 @@
+<div id="vk_api_transport"></div>
+
+<nav>
+  <div class="container">
+    <a class="icon"><img src="../assets/burger-weather.png" class="icon__img" (click)="changeNavbar()" /></a>
+    <div class="navbar" *ngIf="isNavbar">
+      <ul class="navbar__links">
+        <li class="navbar__links_item">
+          <a routerLink="/weather" routerLinkActive="active">Weather</a>
+        </li>
+        <li class="navbar__links_item">
+          <a routerLink="/location" routerLinkActive="active">Location</a>
+        </li>
+      </ul>
+      <div class="navbar__buttons">
+        <div class="navbar__buttons_login" *ngIf="!isLogin">
+          <materialize-button (click)="login()">Sign in</materialize-button>
+        </div>
+        <div class="navbar__buttons_logout" *ngIf="isLogin">
+          <a routerLink="/profile" routerLinkActive="active">Profile</a>
+          <materialize-button class="logout" (click)="logout()">Sign out</materialize-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
 <div class="container">
-  <app-location></app-location>
-  <app-weather></app-weather>
+  <router-outlet></router-outlet>
 </div>

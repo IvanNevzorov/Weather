@@ -17,7 +17,6 @@ export class HttpWeatherInterceptor implements HttpInterceptor {
                 const response: Observable<HttpEvent<WeatherStackAPI | OpenWeatherMapAPI>> = of(new HttpResponse({ body }));
                 return response;
             } else {
-                console.log(req);
                 return next.handle(req).pipe(
                     tap((event: HttpEvent<WeatherStackAPI | OpenWeatherMapAPI>) => {
                         if (event instanceof HttpResponse) {

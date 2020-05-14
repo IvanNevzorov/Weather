@@ -23,7 +23,7 @@
 
   &__temperature {
     @include weather-card {
-      font-size: 60px;
+      font-size: 45px;
       padding-top: 50px;
       padding-bottom: 50px;
     }

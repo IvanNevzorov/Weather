@@ -9,19 +9,14 @@ body {
 
 $materialize-fonts-path: '~materialize-angular/fonts';
 
-$materialize-card-background: linear-gradient(
-  0deg,
-  rgba(83, 189, 247, 1) 0%,
-  rgba(119, 171, 255, 1) 47%,
-  rgba(151, 163, 255, 1) 100%
-);
 $materialize-form-control-container-margin: 5px;
 $materialize-form-control-container-line-color: #0750f6;
 $materialize-form-control-focused-label-color: #0750f6;
 
 $materialize-button-accent-background: #3873f7;
-$materialize-button-accent-hover-background: #0750f6;
+$materialize-button-accent-hover-background: #a759f0;
 
 $materialize-card-margin: 0px;
+$materialize-card-background: linear-gradient(0deg, #53bdf7 0%, #77abff 47%, #97a3ff 100%);
 
 @import '~materialize-angular/styles/materialize-angular.scss';

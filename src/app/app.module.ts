@@ -10,13 +10,22 @@ import { WeathersEffecrs } from './store/effects/weathrs.effects';
 import { reducers } from './store';
 import { LocationComponent } from './components/location/location.component';
 import { WeatherComponent } from './components/weather/weather.component';
-import { MaterializeButtonModule, MaterializeCardModule, MaterializeSelectModule, MaterializeInputModule } from 'materialize-angular';
+import {
+  MaterializeButtonModule,
+  MaterializeCardModule,
+  MaterializeSelectModule,
+  MaterializeInputModule,
+  MaterializeNavbarModule
+} from 'materialize-angular';
+import { AppRoutingModule } from './app-routing.module';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LocationComponent,
-    WeatherComponent
+    WeatherComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +37,9 @@ import { MaterializeButtonModule, MaterializeCardModule, MaterializeSelectModule
     MaterializeButtonModule,
     MaterializeCardModule,
     MaterializeSelectModule,
-    MaterializeInputModule
+    MaterializeInputModule,
+    MaterializeNavbarModule,
+    AppRoutingModule
   ],
   providers: [
     {

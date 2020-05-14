@@ -12,6 +12,16 @@ export const reducers: ActionReducerMap<State> = {
 
 export const selectWeatherAPIStore = (state: State) => state.weatherStore;
 
+export const selectSessionState = createSelector(
+    selectWeatherAPIStore,
+    (weatherStore: weathersReduser.State) => weatherStore.session
+);
+
+export const selectUserState = createSelector(
+    selectWeatherAPIStore,
+    (weatherStore: weathersReduser.State) => weatherStore.user
+);
+
 export const selectLocationState = createSelector(
     selectWeatherAPIStore,
     (weatherStore: weathersReduser.State) => weatherStore.location
@@ -23,8 +33,8 @@ export const selectWeatherState = createSelector(
 );
 
 export const selectCapitalsState = createSelector(
-  selectWeatherAPIStore,
-  (weatherStore: weathersReduser.State) => weatherStore.capitals
+    selectWeatherAPIStore,
+    (weatherStore: weathersReduser.State) => weatherStore.capitals
 );
 
 export const selectResourceState = createSelector(
