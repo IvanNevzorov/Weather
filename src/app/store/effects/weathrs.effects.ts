@@ -44,7 +44,7 @@ export class WeathersEffecrs {
     mergeMap(() =>
       this.locationService.initLocation().pipe(
         map((data: GeoLocationAPI) => {
-          const location = this.serializeService.geoLocationAPI(data);
+          const location: Location = this.serializeService.geoLocationAPI(data);
           return new AddLocationAction(location);
         })
       )
@@ -57,7 +57,7 @@ export class WeathersEffecrs {
     mergeMap((action: GetLocationAction) =>
       this.locationService.getGeoLocation(action.payload).pipe(
         map((data: GeoLocationAPI) => {
-          const location = this.serializeService.geoLocationAPI(data, action.payload);
+          const location: Location = this.serializeService.geoLocationAPI(data, action.payload);
           return new AddLocationAction(location);
         })
       )

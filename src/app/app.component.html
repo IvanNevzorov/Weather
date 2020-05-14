@@ -1,7 +1,9 @@
 <div id="vk_api_transport"></div>
-<materialize-navbar>
+
+<nav>
   <div class="container">
-    <div class="navbar">
+    <a class="icon"><img src="../assets/burger-weather.png" class="icon__img" (click)="changeNavbar()" /></a>
+    <div class="navbar" *ngIf="isNavbar">
       <ul class="navbar__links">
         <li class="navbar__links_item">
           <a routerLink="/weather" routerLinkActive="active">Weather</a>
@@ -21,7 +23,8 @@
       </div>
     </div>
   </div>
-</materialize-navbar>
+</nav>
+
 <div class="container">
   <router-outlet></router-outlet>
 </div>

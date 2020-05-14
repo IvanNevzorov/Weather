@@ -8,7 +8,7 @@ import {
   WeatherCapital
 } from './../store/interfeces/weathers.interfaces';
 import { Injectable } from '@angular/core';
-import { Session, UserAPI, User } from '../store/interfeces/users.interfaces';
+import { UserAPI, User } from '../store/interfeces/users.interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class SerializeService {

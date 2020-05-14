@@ -4,12 +4,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { LocationAPI, GeoLocationAPI } from '../store/interfeces/weathers.interfaces';
 import { Observable } from 'rxjs';
 import { SerializeService } from './serialize.service';
-
-
-export enum LocationUrlType {
-  ipwhois = 'http://free.ipwhois.io/json/',
-  geocode = 'https://graphhopper.com/api/1/geocode'
-}
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 
@@ -27,17 +22,17 @@ export class LocationService {
   }
 
   public getLocation(): Observable<LocationAPI> {
-    return this.http.get(LocationUrlType.ipwhois).pipe(
+    return this.http.get(environment.ipwhoisUrl).pipe(
       map((data: LocationAPI) => data)
     );
   }
 
   public getGeoLocation(city: string): Observable<GeoLocationAPI> {
-    return this.http.get(LocationUrlType.geocode, {
+    return this.http.get(environment.geocodeUrl, {
       params: new HttpParams()
         .set('q', city)
         .set('locale', 'en')
-        .set('key', '19fb703c-bd61-4844-bd4d-77d767c37a9a')
+        .set('key', environment.geocodeKey)
     }).pipe(
       map((data: GeoLocationAPI) => data)
     );

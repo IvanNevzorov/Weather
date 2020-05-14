@@ -13,6 +13,7 @@ import { InitLocationAction } from './store/actions/weathers.action';
 })
 
 export class AppComponent implements OnInit {
+  public isNavbar: boolean = true;
   public isLogin: boolean;
   public sessionState$: Observable<Session> = this.store.pipe(select(selectSessionState));
 
@@ -37,6 +38,10 @@ export class AppComponent implements OnInit {
 
   public login(): void {
     this.vkApiService.login();
+  }
+
+  public changeNavbar(): void {
+    this.isNavbar = !this.isNavbar;
   }
 
 }

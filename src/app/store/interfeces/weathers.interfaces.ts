@@ -23,13 +23,13 @@ export interface Location {
 }
 
 export interface WeatherCapital {
-  capital: string;
-  temperature: number;
-  description: string;
+    capital: string;
+    temperature: number;
+    description: string;
 }
 
 export interface Capitals {
-  [id: string]: WeatherCapital;
+    [id: string]: WeatherCapital;
 }
 
 export interface WeatherStackAPI {
@@ -57,11 +57,9 @@ export interface OpenWeatherMapAPI {
 }
 
 export interface WeatherStorage {
-  weatherAPI: WeatherStackAPI | OpenWeatherMapAPI;
+    weatherAPI: WeatherStackAPI | OpenWeatherMapAPI;
     saveTime: string;
 }
-
-
 
 export interface Weather {
     resourse: string;

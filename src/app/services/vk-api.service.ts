@@ -27,16 +27,7 @@ export class VkApiService {
         document.getElementById(id).appendChild(element);
     }
 
-    public apiInit(id: string): void {
-        (window as any).vkAsyncInit = function () {
-            VK.init({
-                apiId: '7461675',
-            });
-        };
-        this.initScriptElement(id);
-    }
-
-    public getProfile(): void {
+    private getProfile(): void {
         let id;
         this.sessionState$.subscribe(session => id = session.id);
 
@@ -55,6 +46,15 @@ export class VkApiService {
         });
     }
 
+    public apiInit(id: string): void {
+        (window as any).vkAsyncInit = function () {
+            VK.init({
+                apiId: '7461675',
+            });
+        };
+        this.initScriptElement(id);
+    }
+
     public login(): void {
         VK.Auth.login((response) => {
             if (response.session) {
@@ -66,7 +66,7 @@ export class VkApiService {
         }, VK.access.FRIENDS);
     }
 
-    public logout() {
+    public logout(): void {
         VK.Auth.logout();
         this.store.dispatch(new AddSessionAction({ id: NaN, status: false }));
         this.router.navigate(['./']);
