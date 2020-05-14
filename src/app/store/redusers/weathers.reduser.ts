@@ -78,6 +78,9 @@ export const reducer = (state: State = initialState, action: WeatherUnionAction)
     case WeathersActionTypes.OpenWeatherMapLoadSuccess:
       return { ...state, weather: action.payload, resource: 'OpenWeatherMap' };
 
+    case WeathersActionTypes.Error:
+      return state;
+
     default:
       break;
   }

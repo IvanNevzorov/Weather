@@ -19,13 +19,16 @@ import {
 } from 'materialize-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AlertsModule } from 'angular-alert-module';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LocationComponent,
     WeatherComponent,
-    ProfileComponent
+    ProfileComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     MaterializeSelectModule,
     MaterializeInputModule,
     MaterializeNavbarModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AlertsModule.forRoot()
   ],
   providers: [
     {
@@ -50,4 +54,5 @@ import { ProfileComponent } from './components/profile/profile.component';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AddSessionAction, AddUserAction } from '../store/actions/weathers.action';
 import { SerializeService } from './serialize.service';
@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Session, UserAPI } from '../store/interfeces/users.interfaces';
 import { selectSessionState } from 'src/app/store';
 import { Router } from '@angular/router';
+import { AlertsService } from 'angular-alert-module';
 
 declare let VK: any;
 
@@ -16,7 +17,8 @@ export class VkApiService {
     constructor(
         private store: Store,
         private serializeService: SerializeService,
-        private router: Router
+        private router: Router,
+        private alertsService: AlertsService
     ) { }
 
     private initScriptElement(id: string): void {
@@ -42,6 +44,8 @@ export class VkApiService {
             if (data.response) {
                 const user = this.serializeService.userAPI(data);
                 this.store.dispatch(new AddUserAction(user));
+            } else {
+                this.alertsService.setMessage('No access!', 'error');
             }
         });
     }
@@ -60,8 +64,9 @@ export class VkApiService {
             if (response.session) {
                 this.store.dispatch(new AddSessionAction({ id: response.session.user.id, status: true }));
                 this.getProfile();
+                this.alertsService.setMessage('You have logged successfully', 'success');
             } else {
-                console.log('Not authenticated!');
+                this.alertsService.setMessage('Not authenticated!', 'error');
             }
         }, VK.access.FRIENDS);
     }

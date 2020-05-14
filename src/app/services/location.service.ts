@@ -5,11 +5,16 @@ import { LocationAPI, GeoLocationAPI } from '../store/interfeces/weathers.interf
 import { Observable } from 'rxjs';
 import { SerializeService } from './serialize.service';
 import { environment } from 'src/environments/environment';
+import { AlertsService } from 'angular-alert-module';
 
 @Injectable({ providedIn: 'root' })
 
 export class LocationService {
-  constructor(private http: HttpClient, private serializeService: SerializeService) { }
+  constructor(
+    private http: HttpClient,
+    private serializeService: SerializeService,
+    private alertsService: AlertsService
+  ) { }
 
   public initLocation(): Observable<GeoLocationAPI> {
     return this.getLocation().pipe(
@@ -22,9 +27,14 @@ export class LocationService {
   }
 
   public getLocation(): Observable<LocationAPI> {
-    return this.http.get(environment.ipwhoisUrl).pipe(
-      map((data: LocationAPI) => data)
-    );
+    try {
+      return this.http.get(environment.ipwhoisUrl).pipe(
+        map((data: LocationAPI) => data)
+      );
+    } catch (error) {
+      this.alertsService.setMessage(error.massage, 'error');
+    }
+
   }
 
   public getGeoLocation(city: string): Observable<GeoLocationAPI> {

@@ -4,6 +4,10 @@ nav {
   height: auto;
   background-color: #97a3ff;
   box-shadow: 0px 2px 3px 0px rgba(83, 80, 80, 0.75);
+
+  @include media-phones {
+    margin-bottom: 2vh;
+  }
 }
 
 .container {
@@ -37,6 +41,7 @@ nav {
     @include media-phones {
       display: flex;
       justify-content: flex-end;
+      background-color: #c3a5e0;
     }
   }
 
